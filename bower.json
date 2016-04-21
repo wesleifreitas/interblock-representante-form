@@ -1,0 +1,33 @@
+{
+  "name": "interblock-representante-form",
+  "version": "0.0.0",
+  "homepage": "https://github.com/wesleifreitas/interblock-representante-form",
+  "private": true,
+  "authors": [
+    "Weslei Freitas <weslei.rfreitas@gmail.com>"
+  ],
+  "description": "Formulário - Representante",
+  "main": "src/js/app.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "representante interblock"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "docs",
+    "src"
+  ],
+  "dependencies": {
+    "angular": "~1.5.4",
+    "angular-material": "~1.0.7",
+    "angular-route": "~1.5.3"
+  }
+}
