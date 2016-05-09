@@ -10,7 +10,7 @@
 </head>
 
 <body ng-app="angularApp" ng-cloak>
-    <div layout="row" layout-align="center center" ng-controller="FormCtrl">
+    <div layout="row" layout-align="center center" ng-controller="FormCtrl" ng-init="init()">
         <div flex="70" flex-sm="100">
             <div layout="column" ng-cloak class="md-inline-form">
                 <md-content layout-gt-sm="row">
@@ -32,24 +32,47 @@
                     <center>
                         <h3>Representate</h3>
                     </center>
-                    <div layout-gt-xs="row">
+                    <form name="loginForm" layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Representante</label>
-                            <input ng-model="representante.nome">
+                            <input ng-model="representante.nome" ng-disabled="representante.autorizado">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-xs>
+                            <label>Senha do representante</label>
+                            <input ng-model="representante.senha" type="password" ng-disabled="representante.autorizado">
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Vendedor</label>
                             <input ng-model="representante.vendedor">
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-xs>
-                            <label>Senha do representante</label>
-                            <input ng-model="representante.senha" type="password">
+                            <label>Código da operação</label>
+                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado">
+                            <div class="operacao-hint">
+                                <span>Preencha com 0 (zero) para uma nova operação ou digite outro número para consultar operação já salva.</span>
+                            </div>
                         </md-input-container>
-                    </div>
-                    <center>
-                        <h3>Cliente</h3>
-                    </center>
-                    <form name="representanteForm">
+                    </form>
+                    <md-content layout="row" layout-align="center center">
+                        <md-button class="md-raised md-primary" ng-click="login()" ng-disabled="loginForm.$invalid === true || loginForm.loading" ng-show="representante.operacao == 0 && !representante.autorizado">
+                            <md-icon class="material-icons">assignment</md-icon>
+                            Iniciar preenchimento
+                        </md-button>
+                        <md-button class="md-raised md-primary" ng-click="getData()" ng-disabled="loginForm.$invalid === true || loginForm.loading" ng-show="representante.operacao != 0 && !representante.autorizado">
+                            <md-icon class="material-icons">search</md-icon>
+                            Consultar dados
+                        </md-button>
+                        <md-button class="md-raised md-primary" ng-click="restart()" ng-disabled="loginForm.$invalid === true || loginForm.loading" ng-show="representante.autorizado">
+                            <md-icon class="material-icons">restore_page</md-icon>
+                            Reiniciar formulário
+                        </md-button>
+                    </md-content>
+                    <div class="error">{{loginForm.message}}</div>
+                    <md-progress-linear md-mode="indeterminate" ng-show="loginForm.loading"></md-progress-linear>
+                    <form name="representanteForm" ng-show="representante.autorizado">
+                        <center>
+                            <h3>Cliente</h3>
+                        </center>
                         <div layout-gt-xs="row">
                             <md-input-container class="md-block" flex-gt-xs>
                                 <label>Nome / Razão Social</label>
@@ -259,19 +282,20 @@
                 </div>
                 <!-- </md-content> -->
             </div>
-            <md-content>
-                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-                    <md-button class="md-raised md-primary" ng-click="saveData()" ng-disabled="representanteForm.$invalid === true">
-                        <md-icon class="material-icons">picture_as_pdf</md-icon>
-                        Salvar e gerar PDF
-                    </md-button>
-                    <!--
+            <md-content ng-show="representante.autorizado" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                <md-button class="md-raised md-primary" ng-click="saveData()" ng-disabled="representanteForm.$invalid === true || representanteForm.loading">
+                    <md-icon class="material-icons">picture_as_pdf</md-icon>
+                    Salvar e gerar PDF
+                </md-button>
+                <md-progress-linear md-mode="indeterminate" ng-show="representanteForm.loading"></md-progress-linear>
+                <!--
                     <md-button class="md-raised md-primary">
                         <md-icon class="material-icons">email</md-icon>
                         Enviar dados para INTERBLOCK
                     </md-button>
                     -->
             </md-content>
+            <div class="error">{{representanteForm.message}}</div>
         </div>
     </div>
     <!-- Angular Material requires Angular.js Libraries -->
