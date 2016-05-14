@@ -94,10 +94,16 @@
                             </div>
                         </div>
                         <div layout-gt-sm="row">
-                            <md-input-container class="md-block" flex="80">
+                            <md-input-container class="md-block" flex="70">
                                 <label>Endereço</label>
                                 <input ng-model="cliente.endereco">
                             </md-input-container>
+                            <!--
+                            <md-input-container class="md-block" flex="10">
+                                <label>N°</label>
+                                <input ng-model="cliente.endereco_numero">
+                            </md-input-container>
+                            -->
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Complemento</label>
                                 <input ng-model="cliente.complemento">
@@ -182,15 +188,15 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="15">
                                 <label>Valor a vista</label>
-                                <input ng-model="equipamento.valorVista">
+                                <input ng-model="equipamento.valorVista.value">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15">
                                 <label>Pag. prazo</label>
-                                <input ng-model="equipamento.pagamentroPrazo">
+                                <input ng-model="equipamento.pagamentoPrazo.value">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15">
                                 <label>Locação Mensal</label>
-                                <input ng-model="equipamento.locacao">
+                                <input ng-model="equipamento.locacao.value">
                             </md-input-container>
                         </div>
                         <center>
@@ -203,15 +209,15 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="15" ng-if="servico.comodato === false">
                                 <label>Valor a vista</label>
-                                <input ng-model="servico.valorVista">
+                                <input ng-model="servico.valorVista.value">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15" ng-if="servico.comodato === false">
                                 <label>Pag. prazo</label>
-                                <input ng-model="servico.pagamentroPrazo">
+                                <input ng-model="servico.pagamentoPrazo.value">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15" ng-if="servico.comodato === false">
                                 <label>Locação Mensal</label>
-                                <input ng-model="servico.locacao">
+                                <input ng-model="servico.locacao.value">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15" ng-if="servico.comodato === true">
                                 <label></label>
@@ -236,7 +242,7 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>Valor por parcelas da entrada</label>
-                                <input ng-model="pagamento.nValorParcelaEntrada">
+                                <input ng-model="pagamento.valorParcelaEntrada">
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row" ng-if="pagamento.tipo === 'cheque'">

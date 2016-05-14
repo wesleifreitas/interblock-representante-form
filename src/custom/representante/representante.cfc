@@ -168,18 +168,200 @@
 			<cfreturn result>
 		</cfif>
 
+		<cfset formError = structNew()>
+		<cfset formError["error"] = false>
+		<cfset formError["fields"] = arrayNew(1)>
+
+		<cfset grupo_id = 2>
+		<cfset subgrupo_id = 2>
+		<!--- CLIENTE - START --->
+		<cfset rev_cli_nome = arguments.cliente.nome>
+		<cfset rev_cli_pessoa = arguments.cliente.tipo>
+		<cfset rev_cli_cpfCnpj = arguments.cliente.cpfCnpj>
+		<cfset rev_cli_rgInscricaoEstadual = arguments.cliente.rgInscricaoEstadual>
+		<cfset rev_cli_tel1 = arguments.cliente.tel1>
+		<cfset rev_cli_tel2 = arguments.cliente.tel2>
+		<cfset rev_cli_tel3 = arguments.cliente.tel3>
+		<cfset rev_cli_tel4 = arguments.cliente.tel4>
+		<cfset rev_cli_email = arguments.cliente.email>
+		<cfset rev_cli_nascimento = arguments.cliente.nascimento>
+		<cfset rev_cli_cep = arguments.cliente.cep>
+		<cfset rev_cli_endereco = arguments.cliente.endereco>
+		<cfset rev_cli_numero = arguments.cliente.endereco_numero>
+		<cfset rev_cli_complemento = arguments.cliente.complemento>
+		<cfset rev_cli_bairro = arguments.cliente.bairro>
+		<cfset rev_cli_cidade = arguments.cliente.cidade>
+		<cfset rev_cli_uf = arguments.cliente.uf>
+		<cfset cli_cep = arguments.cliente.cep>
+		<!--- CLIENTE - END --->
+		<!--- VEÍCULO - START --->
+		<cfset rev_vei_marca = arguments.veiculo.marca>
+		<cfset rev_vei_modelo = arguments.veiculo.modelo>
+		<cfset rev_vei_cor = arguments.veiculo.cor>
+		<cfset rev_vei_ano = arguments.veiculo.ano>
+		<cfset rev_vei_placa = arguments.veiculo.placa>
+		<!--- VEÍCULO - END --->
+		<!--- CONTRATO - START --->
+		<cfset rev_prop_data_instalacao = arguments.contrato.dataInstalacao>
+		<cfset rev_prop_data_inicio = arguments.contrato.dataInicio>
+		<cfset rev_prop_data_fim = arguments.contrato.dataTermino>
+		<cfset rev_prop_data_renovacao = arguments.contrato.dataRenovacao>
+		
+		<!--- CONTRATO - END --->
+		<!--- EQUIPAMENTOS - START --->
+		<cfloop array="#arguments.equipamentos#" index="i">
+			<cfset i.valorVista.value = replace(REReplace(i.valorVista.value, '[^0-9,]', "", "all"),",",".")>
+			<cfset i.pagamentoPrazo.value = REReplace(i.pagamentoPrazo.value, '[^0-9]', "", "all")>
+			<cfset i.locacao.value = replace(REReplace(i.locacao.value, '[^0-9,]', "", "all"),",",".")>
+
+			<cfif i.valorVista.value EQ "">
+				<cfset i.valorVista.value = 0>
+			</cfif>
+			<cfif i.pagamentoPrazo.value EQ "">
+				<cfset i.valorpagamentoPrazoVista.value = 0>
+			</cfif>
+			<cfif i.locacao.value EQ "">
+				<cfset i.locacao.value = 0>
+			</cfif>
+		</cfloop>
+		<!--- EQUIPAMENTOS - END --->
+		<!--- SERVICOS - START --->
+		<cfloop array="#arguments.servicos#" index="i">
+			<cfset i.valorVista.value = replace(REReplace(i.valorVista.value, '[^0-9,]', "", "all"),",",".")>
+			<cfset i.pagamentoPrazo.value = REReplace(i.pagamentoPrazo.value, '[^0-9]', "", "all")>
+			<cfset i.locacao.value = replace(REReplace(i.locacao.value, '[^0-9,]', "", "all"),",",".")>
+
+			<cfif i.valorVista.value EQ "">
+				<cfset i.valorVista.value = 0>
+			</cfif>
+			<cfif i.pagamentoPrazo.value EQ "">
+				<cfset i.valorpagamentoPrazoVista.value = 0>
+			</cfif>
+			<cfif i.locacao.value EQ "">
+				<cfset i.locacao.value = 0>
+			</cfif>
+		</cfloop>
+		<!--- SERVICOS - END --->
+		<!--- PAGAMENTO - START --->
+		<cfset rev_pagamento_entrada = replace(REReplace(arguments.pagamento.entrada, '[^0-9,]', "", "all"),",",".")>
+		<cfset rev_pagamento_entrada_n_parcelas = replace(REReplace(arguments.pagamento.nParcelasEntrada, '[^0-9]', "", "all"),",",".")>
+		<cfset rev_pagamento_entrada_valor_parcela = replace(REReplace(arguments.pagamento.valorParcelaEntrada, '[^0-9,]', "", "all"),",",".")>
+		<cfset rev_pagamento_n_parcelas = replace(REReplace(arguments.pagamento.nParcelas, '[^0-9]', "", "all"),",",".")>
+		<cfset rev_pagamento_valor_parcela = replace(REReplace(arguments.pagamento.valorParcela, '[^0-9,]', "", "all"),",",".")>
+
+		<cfif rev_pagamento_entrada EQ "">
+			<cfset rev_pagamento_entrada = 0>
+		</cfif>
+		<cfif rev_pagamento_entrada_n_parcelas EQ "">
+			<cfset rev_pagamento_entrada_n_parcelas = 0>
+		</cfif>
+		<cfif rev_pagamento_entrada_valor_parcela EQ "">
+			<cfset rev_pagamento_entrada_valor_parcela = 0>
+		</cfif>
+		<cfif rev_pagamento_n_parcelas EQ "">
+			<cfset rev_pagamento_n_parcelas = 0>
+		</cfif>
+		<cfif rev_pagamento_valor_parcela EQ "">
+			<cfset rev_pagamento_valor_parcela = 0>
+		</cfif>
+		<!--- PAGAMENTO - END --->
+
 		<cfset result["arguments"] = arguments>
 
 		<cfquery datasource="#arguments.dsn#">
 			INSERT INTO 
 				dbo.representante_venda
 			(
-				rev_data,
-				rev_cli_nome
+				rev_cli_nome,
+				rev_cli_pessoa,
+				rev_cli_cpfCnpj,
+				rev_cli_rgInscricaoEstadual,
+				rev_cli_tel1,
+				rev_cli_tel2,
+				rev_cli_tel3,
+				rev_cli_tel4,
+				rev_cli_email,
+				rev_cli_nascimento,
+				rev_cli_endereco,
+				rev_cli_numero,
+				rev_cli_complemento,
+				rev_cli_bairro,
+				rev_cli_cidade,
+				rev_cli_uf,
+				cli_cep,
+				rev_vei_marca,
+				rev_vei_modelo,
+				rev_vei_cor,
+				rev_vei_ano,
+				rev_vei_placa,
+				rev_prop_data_instalacao,
+				rev_prop_data_inicio,
+				rev_prop_data_fim,
+				rev_prop_data_renovacao,
+				rev_pagamento_entrada,
+				rev_pagamento_entrada_n_parcelas,
+				rev_pagamento_entrada_valor_parcela,
+				rev_pagamento_n_parcelas,
+				rev_pagamento_valor_parcela,
+
+				<cfloop array="#arguments.equipamentos#" index="i">
+					#i.valorVista.field#,
+					#i.pagamentoPrazo.field#,
+					#i.locacao.field#,
+				</cfloop>
+				<cfloop array="#arguments.servicos#" index="i">
+					#i.valorVista.field#,
+					#i.pagamentoPrazo.field#,
+					#i.locacao.field#,
+				</cfloop>
+
+				rev_data
 			) 
 			VALUES (
-				GETDATE(),
-				'Teste'
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_nome#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_pessoa#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_cpfCnpj#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_rgInscricaoEstadual#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_tel1#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_tel2#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_tel3#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_tel4#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_email#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_nascimento#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_endereco#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_numero#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_complemento#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_bairro#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_cidade#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_uf#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_cli_cep#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_vei_marca#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_vei_modelo#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_vei_cor#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_vei_ano#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_vei_placa#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_prop_data_instalacao#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_prop_data_inicio#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_prop_data_fim#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#rev_prop_data_renovacao#">,
+				<cfqueryparam cfsqltype="cf_sql_float" value="#rev_pagamento_entrada#">,
+				<cfqueryparam cfsqltype="cf_sql_interger" value="#rev_pagamento_entrada_n_parcelas#">,
+				<cfqueryparam cfsqltype="cf_sql_float" value="#rev_pagamento_entrada_valor_parcela#">,
+				<cfqueryparam cfsqltype="cf_sql_interger" value="#rev_pagamento_n_parcelas#">,
+				<cfqueryparam cfsqltype="cf_sql_float" value="#rev_pagamento_valor_parcela#">,
+				
+				<cfloop array="#arguments.equipamentos#" index="i">
+					<cfqueryparam cfsqltype="cf_sql_float" value="#i.valorVista.value#">,
+					<cfqueryparam cfsqltype="cf_sql_interger" value="#i.pagamentoPrazo.value#">,
+					<cfqueryparam cfsqltype="cf_sql_float" value="#i.locacao.value#">,
+				</cfloop>
+				<cfloop array="#arguments.servicos#" index="i">
+					<cfqueryparam cfsqltype="cf_sql_float" value="#i.valorVista.value#">,
+					<cfqueryparam cfsqltype="cf_sql_interger" value="#i.pagamentoPrazo.value#">,
+					<cfqueryparam cfsqltype="cf_sql_float" value="#i.locacao.value#">,
+				</cfloop>
+
+				GETDATE()
 			);
 		</cfquery>
 

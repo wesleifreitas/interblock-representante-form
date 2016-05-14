@@ -1,4 +1,5 @@
 console.info('app.js init');
+
 var config = {
   dsn: 'px_interblock_sql_local'
 }
@@ -127,13 +128,16 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
       complemento: 'complemento',
       cpfCnpj: 'cpf',
       email: 'e-mail',
+      cep: 'cep',
       endereco: 'endereço',
+      endereco_numero: '',
       nascimento: new Date(),
       nome: 'nome',
       rgInscricaoEstadual: 'rg',
       tel1: 'telefone residencial',
       tel2: 'telefone comercial',
       tel3: 'telefone celular',
+      tel4: '',
       tipo: 'F',
       uf: 'uf'
     };
@@ -141,82 +145,200 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     $scope.veiculo = {
       ano: 'ano',
       cor: 'cor',
+      marca: '',
       modelo: 'modelo',
       placa: 'placa'
     };
 
     $scope.equipamentos = [{
       nome: 'BLOQUEADOR AUTOMÁTICO',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00'
+      valorVista: {
+        field: 'rev_e_bloqueador_automatico_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_e_bloqueador_automatico_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_e_bloqueador_automatico_mensal',
+        value: '0,00'
+      },
     }, {
       nome: 'RASTREADOR GSM/GPS 2000',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00'
+      valorVista: {
+        field: 'rev_e_rastreador_2000_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_e_rastreador_2000_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_e_rastreador_2000_mensal',
+        value: '0,00'
+      },
     }, {
       nome: 'RASTREADOR GSM/GPS 3000',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00'
+      valorVista: {
+        field: 'rev_e_rastreador_3000_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_e_rastreador_3000_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_e_rastreador_3000_mensal',
+        value: '0,00'
+      },
     }, {
       nome: 'BATERIA AUXILIAR',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00'
+      valorVista: {
+        field: 'rev_e_bateria_auxiliar_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_e_bateria_auxiliar_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_e_bateria_auxiliar_mensal',
+        value: '0,00'
+      },
     }, {
       nome: 'ELETROVÁLVULA',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00'
+      valorVista: {
+        field: 'rev_e_eletrovalvula_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_e_eletrovalvula_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_e_eletrovalvula_mensal',
+        value: '0,00'
+      },
     }, {
       nome: 'SENSOR DE PORTA',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00'
+      valorVista: {
+        field: 'rev_e_sensor_porta_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_e_sensor_porta_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_e_sensor_porta_mensal',
+        value: '0,00'
+      },
     }, {
       nome: 'MÓDULO DE VIDRO',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00'
+      valorVista: {
+        field: 'rev_e_modulo_vidro_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_e_modulo_vidro_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_e_modulo_vidro_mensal',
+        value: '0,00'
+      },
     }];
 
     $scope.servicos = [{
       nome: 'INSTALAÇÃO E REGISTRO DE CONTRATO',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00',
+      valorVista: {
+        field: 'rev_s_instalacao_registro_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_s_instalacao_registro_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_s_instalacao_registro_mensal',
+        value: '0,00'
+      },
       comodato: false
     }, {
       nome: 'TAXA DE HABILITAÇÃO',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00',
+      valorVista: {
+        field: 'rev_s_taxa_habilitacao_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_s_taxa_habilitacao_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_s_taxa_habilitacao_mensal',
+        value: '0,00'
+      },
       comodato: false
     }, {
       nome: 'SERVIÇOS DE CENTRAL',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00',
+      valorVista: {
+        field: 'rev_s_central_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_s_central_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_s_central_mensal',
+        value: '0,00'
+      },
       comodato: false
     }, {
       nome: 'LOCALIZADOR VIVA VOZ',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00',
+      valorVista: {
+        field: 'rev_s_viva_voz_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_s_viva_voz_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_s_viva_voz_mensal',
+        value: '0,00'
+      },
       comodato: true
     }, {
       nome: 'CRÉDITO MENSAL CHIPS DE TELEMETRIA',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00',
+      valorVista: {
+        field: 'rev_s_credito_chip_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_s_credito_chip_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_s_credito_chip_mensal',
+        value: '0,00'
+      },
       comodato: false
     }, {
       nome: 'CUSTO ADMINISTRATIVOS',
-      valorVista: '0,00',
-      pagamentroPrazo: '0',
-      locacao: '0,00',
+      valorVista: {
+        field: 'rev_s_administrativo_vista',
+        value: '0,00'
+      },
+      pagamentoPrazo: {
+        field: 'rev_s_administrativo_prazo',
+        value: '0,00'
+      },
+      locacao: {
+        field: 'rev_s_administrativo_mensal',
+        value: '0,00'
+      },
       comodato: false
     }];
 
@@ -224,7 +346,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
       entrada: '0,00',
       nParcelas: 'n parcela',
       nParcelasEntrada: 'n parcela entrada',
-      nValorParcelaEntrada: 'valor parcela entrada',
+      valorParcelaEntrada: 'valor parcela entrada',
       tipo: 'dinheiro',
       valorParcela: 'valor parcela'
     };
@@ -274,6 +396,8 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
 
   $scope.saveData = function() {
     $scope.representanteForm.loading = true;
+
+    
     var params = {
       representante: $scope.representante,
       cliente: $scope.cliente,
