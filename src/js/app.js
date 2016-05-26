@@ -74,15 +74,14 @@ app.factory('formService', ['$http', function($http) {
 
   function saveData(params, callback) {
     params.dsn = config.dsn;
+    
     $http({
       method: 'POST',
-      url: 'custom/representante/representante.cfc?method=saveData',
-      params: params
-    }).success(function(response) {
+      url: '../../rest/interblock/service/representante/form',
+      data: params
+    }).then(function successCallback(response) {      
       callback(response);
-    }).
-    error(function(data, status, headers, config) {
-      // Erro
+    }, function errorCallback(response) {
       alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
     });
   }
@@ -397,7 +396,6 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
   $scope.saveData = function() {
     $scope.representanteForm.loading = true;
 
-    
     var params = {
       representante: $scope.representante,
       cliente: $scope.cliente,
@@ -409,8 +407,14 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     };
     formService.saveData(params, function(response) {
       console.info('response', response);
+
+      window.open(
+        '_server/files/venda_' + response.data.pdf.rev_id + '.pdf',
+        '_blank'
+      );
+
       $timeout(function() {
-        $scope.representanteForm.message = response.message;
+        $scope.representanteForm.message = response.data.message;
         $scope.representanteForm.loading = false;
       }, 1500)
     });

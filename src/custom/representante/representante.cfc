@@ -101,21 +101,21 @@
 
 	<cfargument
 		name="representante"
-		type="string"
+		type="any"
 		required="false"
 		default=""
 		hint="">
 
 	<cfargument
 		name="cliente"
-		type="string"
+		type="any"
 		required="false"
 		default=""
 		hint="">
 
 	<cfargument
 		name="veiculo"
-		type="string"
+		type="any"
 		required="false"
 		default=""
 		hint="">
@@ -143,7 +143,7 @@
 
 	<cfargument
 		name="contrato"
-		type="string"
+		type="any"
 		required="false"
 		default=""
 		hint="">
@@ -152,15 +152,15 @@
 
 	<cftry>	
 		<!--- Verificar permissão --->
-		<cfset loginResponse = login(arguments.dsn, arguments.representante)>
+		<cfset loginResponse = login(arguments.dsn, SerializeJSON(arguments.representante))>
 
-		<cfset arguments.representante = decode(arguments.representante)>
-		<cfset arguments.cliente = decode(arguments.cliente)>
-		<cfset arguments.veiculo = decode(arguments.veiculo)>
+		<!--- <cfset arguments.representante = decode(arguments.representante)> --->
+		<!--- <cfset arguments.cliente = decode(arguments.cliente)> --->
+		<!---<cfset arguments.veiculo = decode(arguments.veiculo)> --->
 		<cfset arguments.equipamentos = decode(arguments.equipamentos)>
 		<cfset arguments.servicos = decode(arguments.servicos)>
 		<cfset arguments.pagamento = decode(arguments.pagamento)>
-		<cfset arguments.contrato = decode(arguments.contrato)>
+		<!--- <cfset arguments.contrato = decode(arguments.contrato)> --->
 
 		<cfset result["autorizado"] = loginResponse.autorizado>
 		<cfif result["autorizado"] EQ false>			
@@ -264,11 +264,17 @@
 		<cfif rev_pagamento_valor_parcela EQ "">
 			<cfset rev_pagamento_valor_parcela = 0>
 		</cfif>
+
+		<cfset arguments.pagamento.entrada = rev_pagamento_entrada>
+		<cfset arguments.pagamento.nParcelasEntrada = rev_pagamento_entrada_n_parcelas>
+		<cfset arguments.pagamento.valorParcelaEntrada = rev_pagamento_entrada_valor_parcela>
+		<cfset arguments.pagamento.nParcelas = rev_pagamento_n_parcelas>
+		<cfset arguments.pagamento.valorParcela = rev_pagamento_valor_parcela>
 		<!--- PAGAMENTO - END --->
 
 		<cfset result["arguments"] = arguments>
 
-		<cfquery datasource="#arguments.dsn#">
+		<cfquery datasource="#arguments.dsn#" result="rQuery">
 			INSERT INTO 
 				dbo.representante_venda
 			(
@@ -360,12 +366,13 @@
 					<cfqueryparam cfsqltype="cf_sql_interger" value="#i.pagamentoPrazo.value#">,
 					<cfqueryparam cfsqltype="cf_sql_float" value="#i.locacao.value#">,
 				</cfloop>
-
 				GETDATE()
 			);
 		</cfquery>
-
-		<cfset result["success"] = true>				  
+		
+		<!--- <cfset result["rQuery"] = rQuery> --->
+		<cfset result["pdf"] = setPdf(arguments, rQuery.IDENTITYCOL)>
+		<cfset result["success"] = true>
 			
 		<cfreturn result>
 
@@ -375,4 +382,44 @@
 			<cfreturn result>
 		</cfcatch>		
 	</cftry>
+</cffunction>
+
+<cffunction name="setPdf" access="private" returntype="any">
+
+	<cfargument
+		name="data"
+		type="struct"
+		required="false"
+		default=""
+		hint="">
+
+	<cfargument
+		name="rev_id"
+		type="numeric"
+		required="false"
+		default=""
+		hint="IDENTITYCOL">
+
+	<cftry>
+		
+		<cfset response = structNew()>
+		<cfset response["data"] = arguments.data>
+		<cfset response["rev_id"] = arguments.rev_id>
+
+		<cfdocument format="PDF" 
+				localurl="false"
+	 	 		filename="#expandPath('./')#interblock-representante-form/src/_server/files/venda_#arguments.rev_id#.pdf" 
+	 	 		overwrite="yes" 	 	 			
+	 	 		pagetype="a4"> 
+				<cfinclude template="vendaConteudoPdf.cfm">
+		</cfdocument>
+
+		<cfreturn response>
+
+		<cfcatch>
+			<cfset response["cfcatch"] = cfcatch>
+			<cfreturn response>
+		</cfcatch>
+	</cftry>
+
 </cffunction>
