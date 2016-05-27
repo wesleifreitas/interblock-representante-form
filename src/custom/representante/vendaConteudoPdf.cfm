@@ -179,10 +179,10 @@ table.assinaturas td{
 			SELECT
 				rev_codigo
 				,rev_cli_nascimento
-				,rev_prop_data_instalacao
-				,rev_prop_data_inicio
-				,rev_prop_data_fim
-				,rev_prop_data_renovacao
+				,rev_con_data_instalacao
+				,rev_con_data_inicio
+				,rev_con_data_fim
+				,rev_con_data_renovacao
 			FROM
 				dbo.representante_venda
 			WHERE
@@ -234,7 +234,7 @@ table.assinaturas td{
 		<table width="100%" class="block">
 			<tr>	
 				<td class="titulo">Nome:</td>
-				<td class="valor"><span class="value">#data.cliente.nome#</span></td>
+				<td class="valor"><span class="value">#data.cliente.rev_cli_nome#</span></td>
 				
 				<td class="titulo">Data de Nascimento:</td>
 				<td class="valor">
@@ -248,50 +248,50 @@ table.assinaturas td{
 				<td class="titulo">Endereço:</td>
 				<td class="valor" nowrap>
 					<span class="value">
-						#data.cliente.endereco#, #data.cliente.endereco_numero#
+						#data.cliente.rev_cli_endereco#, #data.cliente.rev_cli_endereco_numero#
 					</span>
 				</td>
 				
 				<td class="titulo">Complemento:</td>
-				<td class="valor"><span class="value">#data.cliente.complemento#</span></td>					
+				<td class="valor"><span class="value">#data.cliente.rev_cli_complemento#</span></td>					
 			</tr>
 
 			<tr>	
 				<td class="titulo">Bairro:</td>
-				<td class="valor"><span class="value">#data.cliente.bairro#</span></td>
+				<td class="valor"><span class="value">#data.cliente.rev_cli_bairro#</span></td>
 				
 				<td class="titulo">Cidade:</td>
-				<td class="valor"><span class="value">#data.cliente.cidade#</span> - <span><span class="value">SP</span></span></td>
+				<td class="valor"><span class="value">#data.cliente.rev_cli_cidade#</span> - <span><span class="value">SP</span></span></td>
 			</tr>
 
 			<tr>	
 				<td class="titulo">CEP:</td>
-				<td class="valor"><span class="value">#data.cliente.cep#</span></td>
+				<td class="valor"><span class="value">#data.cliente.rev_cli_cep#</span></td>
 				
 				<td class="titulo">Tel. Residêncial:</td>
-				<td class="valor"><span class="value">#data.cliente.tel1#</span></td>
+				<td class="valor"><span class="value">#data.cliente.rev_cli_tel1#</span></td>
 			</tr>
 
 			<tr>					
 				<td class="titulo">Tel. Comercial:</td>
-				<td class="valor"><span class="value">#data.cliente.tel2#</span></td>
+				<td class="valor"><span class="value">#data.cliente.rev_cli_tel2#</span></td>
 
 				<td class="titulo">Celular:</td>
-				<td class="valor"><span class="value">#data.cliente.tel3#</span></td>
+				<td class="valor"><span class="value">#data.cliente.rev_cli_tel3#</span></td>
 			</tr>
 
 			<tr>					
 				<td class="titulo">CPF / CNPJ:</td>
 				<td class="valor">
 					<span class="value">
-						#data.cliente.cpfCnpj#
+						#data.cliente.rev_cli_cpfCnpj#
 					</span>
 				</td>
 
 				<td class="titulo">RG / Inscrição estadual:</td>
 				<td class="valor">
 					<span class="value">
-						#data.cliente.rgInscricaoEstadual#
+						#data.cliente.rev_cli_rgInscricaoEstadual#
 					</span>
 				</td>
 			</tr>	
@@ -300,7 +300,7 @@ table.assinaturas td{
 				<td class="titulo">E-mail:</td>
 				<td class="valor">
 					<span class="value">
-						#data.cliente.email#
+						#data.cliente.rev_cli_email#
 					</span>
 				</td>				
 			</tr>		
@@ -312,16 +312,16 @@ table.assinaturas td{
 		<table width="100%" class="block">
 			<tr>					
 				<td class="titulo">Marca/Modelo:</td>
-				<td class="valor"><span class="value">#data.veiculo.modelo#</span></td>
+				<td class="valor"><span class="value">#data.veiculo.rev_vei_modelo#</span></td>
 
 				<td class="titulo">Cor:</td>
-				<td class="valor"><span class="value">#data.veiculo.cor#</span></td>
+				<td class="valor"><span class="value">#data.veiculo.rev_vei_cor#</span></td>
 
 				<td class="titulo">Ano:</td>
-				<td class="valor"><span class="value">#data.veiculo.ano#</span></td>
+				<td class="valor"><span class="value">#data.veiculo.rev_vei_ano#</span></td>
 
 				<td class="titulo">Placa:</td>
-				<td class="valor"><span class="value">#data.veiculo.placa#</span></td>
+				<td class="valor"><span class="value">#data.veiculo.rev_vei_placa#</span></td>
 			</tr>
 		</table>
 		
@@ -434,13 +434,13 @@ table.assinaturas td{
 		
 		<table width="100%" class="block">
 			<!--- DINHEIRO --->
-			<cfif data.pagamento.tipo EQ "dinheiro">
+			<cfif data.pagamento.rev_pagamento_tipo EQ "dinheiro">
 				<tr>
 					<td class="titulo">Entrada:</td>
 					<td class="valor">Dinheiro</td>
 
 					<td class="titulo">Valor:</td>
-					<td class="valor">#LSCurrencyFormat(data.pagamento.entrada)#</td>
+					<td class="valor">#LSCurrencyFormat(data.pagamento.rev_pagamento_entrada)#</td>
 				</tr>
 			<cfelse><!--- CHEQUE --->	
 				<!---
@@ -449,7 +449,7 @@ table.assinaturas td{
 					<td class="valor">Cheque</td>
 
 					<td class="titulo">Valor:</td>
-					<td class="valor">#LSCurrencyFormat(data.pagamento.entrada)#</td>
+					<td class="valor">#LSCurrencyFormat(data.pagamento.rev_pagamento_entrada)#</td>
 
 					<td class="titulo">Banco:</td>
 					<td class="valor">#data.pagamento.cheque_banco#</td>
@@ -475,14 +475,14 @@ table.assinaturas td{
 				<td class="titulo">Data da instalação:</td>
 				<td class="valor">
 					<span class="value">
-						#LSDateFormat(qQuery.rev_prop_data_instalacao,"DD/MM/YYYY")#
+						#LSDateFormat(qQuery.rev_con_data_instalacao,"DD/MM/YYYY")#
 					</span>
 				</td>
 				
 				<td class="titulo">Início do contrato:</td>
 				<td class="valor">
 					<span class="value">
-						#LSDateFormat(qQuery.rev_prop_data_inicio,"DD/MM/YYYY")#
+						#LSDateFormat(qQuery.rev_con_data_inicio,"DD/MM/YYYY")#
 					</span>
 				</td>	
 			</tr>
@@ -490,14 +490,14 @@ table.assinaturas td{
 				<td class="titulo">Término do contrato:</td>
 				<td class="valor">
 					<span class="value">
-						#LSDateFormat(qQuery.rev_prop_data_fim,"DD/MM/YYYY")#
+						#LSDateFormat(qQuery.rev_con_data_fim,"DD/MM/YYYY")#
 					</span>
 				</td>
 				
 				<td class="titulo">Renovação do contrato:</td>
 				<td class="valor">
 					<span class="value">
-						#LSDateFormat(qQuery.rev_prop_data_renovacao,"DD/MM/YYYY")#
+						#LSDateFormat(qQuery.rev_con_data_renovacao,"DD/MM/YYYY")#
 					</span>
 				</td>	
 			</tr>

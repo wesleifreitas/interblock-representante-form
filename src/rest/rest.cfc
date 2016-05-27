@@ -5,7 +5,7 @@
     	access="remote" 
     	returntype="String"
     	httpMethod="POST" 
-    	restPath="/representante/form"
+    	restPath="/form"
     	hint="">
 
         <cfargument name="body" type="String">
@@ -19,7 +19,7 @@
         <cftry>
 	        <cfset body = DeserializeJSON(arguments.body)>
 
-	        <cfinvoke component="interblock-representante-form.src.custom.representante.representante"
+	        <cfinvoke component="cfc.custom.representante.representante"
 	        	method="saveData"
 				dsn="#body.dsn#"
 				representante="#body.representante#"

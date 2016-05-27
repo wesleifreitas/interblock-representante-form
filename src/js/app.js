@@ -74,12 +74,11 @@ app.factory('formService', ['$http', function($http) {
 
   function saveData(params, callback) {
     params.dsn = config.dsn;
-    
     $http({
       method: 'POST',
-      url: '../../rest/interblock/service/representante/form',
+      url: '../../rest/interblock-representante/service/form',
       data: params
-    }).then(function successCallback(response) {      
+    }).then(function successCallback(response) {
       callback(response);
     }, function errorCallback(response) {
       alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
@@ -117,36 +116,36 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
       nome: 'representante',
       senha: 'senha',
       vendedor: 'vendedor',
-      operacao: 0,
+      operacao: 11605,
       autorizado: false
     };
 
     $scope.cliente = {
-      bairro: 'bairro',
-      cidade: 'cidade',
-      complemento: 'complemento',
-      cpfCnpj: 'cpf',
-      email: 'e-mail',
-      cep: 'cep',
-      endereco: 'endereço',
-      endereco_numero: '',
-      nascimento: new Date(),
-      nome: 'nome',
-      rgInscricaoEstadual: 'rg',
-      tel1: 'telefone residencial',
-      tel2: 'telefone comercial',
-      tel3: 'telefone celular',
-      tel4: '',
-      tipo: 'F',
-      uf: 'uf'
+      rev_cli_bairro: 'bairro',
+      rev_cli_cidade: 'cidade',
+      rev_cli_complemento: 'complemento',
+      rev_cli_cpfCnpj: 'cpf',
+      rev_cli_email: 'e-mail',
+      rev_cli_cep: 'cep',
+      rev_cli_endereco: 'endereço',
+      rev_cli_endereco_numero: '',
+      rev_cli_nascimento: new Date(),
+      rev_cli_nome: 'nome',
+      rev_cli_rgInscricaoEstadual: 'rg',
+      rev_cli_tel1: 'telefone residencial',
+      rev_cli_tel2: 'telefone comercial',
+      rev_cli_tel3: 'telefone celular',
+      rev_cli_tel4: '',
+      rev_cli_tipo: 'F',
+      rev_cli_uf: 'uf'
     };
 
     $scope.veiculo = {
-      ano: 'ano',
-      cor: 'cor',
-      marca: '',
-      modelo: 'modelo',
-      placa: 'placa'
+      rev_vei_ano: 'ano',
+      rev_vei_cor: 'cor',
+      rev_vei_marca: '',
+      rev_vei_modelo: 'modelo',
+      rev_vei_placa: 'placa'
     };
 
     $scope.equipamentos = [{
@@ -342,12 +341,12 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     }];
 
     $scope.pagamento = {
-      entrada: '0,00',
-      nParcelas: 'n parcela',
-      nParcelasEntrada: 'n parcela entrada',
-      valorParcelaEntrada: 'valor parcela entrada',
-      tipo: 'dinheiro',
-      valorParcela: 'valor parcela'
+      rev_pagamento_entrada: '0,00',
+      rev_pagamento_n_parcelas: 'n parcela',
+      rev_pagamento_entrada_n_parcelas: 'n parcela entrada',
+      rev_pagamento_entrada_valor_parcela: 'valor parcela entrada',
+      rev_pagamento_tipo: 'dinheiro',
+      rev_pagamento_valor_parcela: 'valor parcela'
     };
 
     $scope.contrato = {
@@ -384,12 +383,55 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
   }
 
   $scope.getData = function() {
-    alert('Funcionalidade em desenvolvimento');
     var params = {
       representante: $scope.representante
     };
     formService.getData(params, function(response) {
       console.info('response', response);
+      $scope.representante.autorizado = true;
+
+      // loop em cliente
+      angular.forEach($scope.cliente, function(index, key) {        
+        if (key === 'rev_cli_nascimento') {
+          $scope.cliente['rev_cli_nascimento'] = new Date(response.qQuery[0][key.toUpperCase()])
+        } else {
+          $scope.cliente[key] = response.qQuery[0][key.toUpperCase()];
+        }
+      });
+
+      // loop em veículo
+      angular.forEach($scope.veiculo, function(index, key) {
+          $scope.veiculo[key] = response.qQuery[0][key.toUpperCase()];
+      });
+
+      // loop em equipamentos
+      angular.forEach($scope.equipamentos, function(index) {
+          index.valorVista.value =  response.qQuery[0][index.valorVista.field.toUpperCase()];
+          index.pagamentoPrazo.value =  response.qQuery[0][index.pagamentoPrazo.field.toUpperCase()];
+          index.locacao.value =  response.qQuery[0][index.locacao.field.toUpperCase()];
+      });
+
+      // loop em servicos
+      angular.forEach($scope.servicos, function(index) {
+          index.valorVista.value =  response.qQuery[0][index.valorVista.field.toUpperCase()];
+          index.pagamentoPrazo.value =  response.qQuery[0][index.pagamentoPrazo.field.toUpperCase()];
+          index.locacao.value =  response.qQuery[0][index.locacao.field.toUpperCase()];
+      });
+
+      // loop em pagamento
+      angular.forEach($scope.pagamento, function(index, key) {
+          $scope.pagamento[key] = response.qQuery[0][key.toUpperCase()];
+      });
+
+      // loop em contrato
+      angular.forEach($scope.contrato, function(index, key) {        
+        if (key === 'rev_cli_nascimento') {
+          $scope.contrato['rev_cli_nascimento'] = new Date(response.qQuery[0][key.toUpperCase()])
+        } else {
+          $scope.contrato[key] = response.qQuery[0][key.toUpperCase()];
+        }
+      });
+
     })
   }
 
@@ -405,11 +447,15 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
       pagamento: angular.toJson($scope.pagamento),
       contrato: $scope.contrato
     };
+
+    //console.info('saveData', params);
+    //return;
     formService.saveData(params, function(response) {
       console.info('response', response);
 
+      $scope.representante.operacao = response.data.rev_codigo;
       window.open(
-        '_server/files/venda_' + response.data.pdf.rev_id + '.pdf',
+        '_server/files/venda_' + $scope.representante.operacao + '.pdf',
         '_blank'
       );
 

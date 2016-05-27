@@ -76,13 +76,13 @@
                         <div layout-gt-xs="row">
                             <md-input-container class="md-block" flex-gt-xs>
                                 <label>Nome / Razão Social</label>
-                                <input name="clienteNome" ng-model="cliente.nome" required>
+                                <input name="clienteNome" ng-model="cliente.rev_cli_nome" required>
                                 <div ng-messages="representanteForm.clienteNome.$error">
                                     <div ng-message="required">Campo obrigatório.</div>
                                 </div>
                             </md-input-container>
                             <div layout="column">
-                                <md-datepicker name="clienteNascimento" ng-model="cliente.nascimento" md-placeholder="Dt. Nascimento" required>
+                                <md-datepicker name="clienteNascimento" ng-model="cliente.rev_cli_nascimento" md-placeholder="Dt. Nascimento" required>
                                 </md-datepicker>
                                 <div class="date-validation">
                                     <!--
@@ -96,65 +96,65 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex="70">
                                 <label>Endereço</label>
-                                <input ng-model="cliente.endereco">
+                                <input ng-model="cliente.rev_cli_endereco">
                             </md-input-container>
                             <!--
                             <md-input-container class="md-block" flex="10">
                                 <label>N°</label>
-                                <input ng-model="cliente.endereco_numero">
+                                <input ng-model="cliente.rev_cli_endereco_numero">
                             </md-input-container>
                             -->
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Complemento</label>
-                                <input ng-model="cliente.complemento">
+                                <input ng-model="cliente.rev_cli_complemento">
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex="40">
                                 <label>Bairro</label>
-                                <input ng-model="cliente.bairro">
+                                <input ng-model="cliente.rev_cli_bairro">
                             </md-input-container>
                             <md-input-container class="md-block" flex="40">
                                 <label>Cidade</label>
-                                <input ng-model="cliente.cidade">
+                                <input ng-model="cliente.rev_cli_cidade">
                             </md-input-container>
                             <md-input-container class="md-block" flex="20">
                                 <label>UF</label>
-                                <input ng-model="cliente.uf">
+                                <input ng-model="cliente.rev_cli_uf">
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex="35">
                                 <label>Telefone Residencial</label>
-                                <input ng-model="cliente.tel1">
+                                <input ng-model="cliente.rev_cli_tel1">
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>Telefone Comercial</label>
-                                <input ng-model="cliente.tel2">
+                                <input ng-model="cliente.rev_cli_tel2">
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>Telefone Celular</label>
-                                <input ng-model="cliente.tel3">
+                                <input ng-model="cliente.rev_cli_tel3">
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
-                            <md-radio-group ng-model="cliente.tipo" flex="35">
+                            <md-radio-group ng-model="cliente.rev_cli_tipo" flex="35">
                                 <md-radio-button value="F" class="md-primary">Física</md-radio-button>
                                 <md-radio-button value="J" class="md-primary">Jurídica</md-radio-button>
                             </md-radio-group>
                             <md-input-container class="md-block" flex="35">
                                 <label>CPF / CNPJ</label>
-                                <input ng-model="cliente.cpfCnpj">
+                                <input ng-model="cliente.rev_cli_cpfCnpj">
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>RG / Inscrição estadual</label>
-                                <input ng-model="cliente.rgInscricaoEstadual">
+                                <input ng-model="cliente.rev_cli_rgInscricaoEstadual">
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex="100">
                                 <label>E-mail</label>
-                                <input ng-model="cliente.email">
+                                <input ng-model="cliente.rev_cli_email">
                             </md-input-container>
                         </div>
                         <center>
@@ -163,19 +163,19 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex="55">
                                 <label>Veículo (Marca/Modelo)</label>
-                                <input ng-model="veiculo.modelo">
+                                <input ng-model="veiculo.rev_vei_modelo">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15">
                                 <label>Cor</label>
-                                <input ng-model="veiculo.cor">
+                                <input ng-model="veiculo.rev_vei_cor">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15">
                                 <label>Ano</label>
-                                <input ng-model="veiculo.ano">
+                                <input ng-model="veiculo.rev_vei_ano">
                             </md-input-container>
                             <md-input-container class="md-block" flex="15">
                                 <label>Placa</label>
-                                <input ng-model="veiculo.placa">
+                                <input ng-model="veiculo.rev_vei_placa">
                             </md-input-container>
                         </div>
                         <center>
@@ -228,24 +228,24 @@
                             <h3>Condições de pagamento</h3>
                         </center>
                         <div layout-gt-sm="row">
-                            <md-radio-group ng-model="pagamento.tipo">
+                            <md-radio-group ng-model="pagamento.rev_pagamento_tipo">
                                 <md-radio-button value="dinheiro" class="md-primary">Dinheiro</md-radio-button>
                                 <md-radio-button value="cheque" class="md-primary">Cheque</md-radio-button>
                             </md-radio-group>
                             <md-input-container class="md-block" flex="80">
                                 <label>Entrada</label>
-                                <input ng-model="pagamento.entrada">
+                                <input ng-model="pagamento.rev_pagamento_entrada">
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>N° de parcelas da entrada</label>
-                                <input ng-model="pagamento.nParcelasEntrada">
+                                <input ng-model="pagamento.rev_pagamento_entrada_n_parcelas">
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>Valor por parcelas da entrada</label>
-                                <input ng-model="pagamento.valorParcelaEntrada">
+                                <input ng-model="pagamento.rev_pagamento_entrada_valor_parcela">
                             </md-input-container>
                         </div>
-                        <div layout-gt-sm="row" ng-if="pagamento.tipo === 'cheque'">
+                        <div layout-gt-sm="row" ng-if="pagamento.rev_pagamento_tipo === 'cheque'">
                             <md-input-container class="md-block" flex="35">
                                 <label>Banco</label>
                                 <input ng-model="pagamento.banco">
@@ -263,11 +263,11 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex="35">
                                 <label>N° de parcelas</label>
-                                <input ng-model="pagamento.nParcelas">
+                                <input ng-model="pagamento.rev_pagamento_n_parcelas">
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>Valor de cada parcela</label>
-                                <input ng-model="pagamento.valorParcela">
+                                <input ng-model="pagamento.rev_pagamento_valor_parcela">
                             </md-input-container>
                         </div>
                         <center>
