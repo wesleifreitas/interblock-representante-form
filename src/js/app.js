@@ -358,6 +358,9 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
       rev_con_data_fim: new Date(),
       rev_con_data_renovacao: new Date()
     };
+
+    // Apagar dados de testes
+    $scope.formClear();
   }
 
   $scope.restart = function() {
@@ -385,13 +388,54 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     })
   }
 
+  $scope.formClear = function() {
+    // loop em representante
+    angular.forEach($scope.representante, function(index, key) {
+      $scope.representante[key] = '';
+    });
+
+    // loop em cliente
+    angular.forEach($scope.cliente, function(index, key) {
+      $scope.cliente[key] = '';
+    });
+
+    // loop em veículo
+    angular.forEach($scope.veiculo, function(index, key) {
+      $scope.veiculo[key] = '';
+    });
+
+    // loop em equipamentos
+    angular.forEach($scope.equipamentos, function(index) {
+      index.valorVista.value = '0,00';
+      index.pagamentoPrazo.value = '0,00';
+      index.locacao.value = '0,00';
+    });
+
+    // loop em servicos
+    angular.forEach($scope.servicos, function(index) {
+      index.valorVista.value = '0,00';
+      index.pagamentoPrazo.value = '0,00';
+      index.locacao.value = '0,00';
+    });
+
+    // loop em pagamento
+    angular.forEach($scope.pagamento, function(index, key) {
+      $scope.pagamento[key] = '';
+    });
+
+    // loop em contrato
+    angular.forEach($scope.contrato, function(index, key) {
+      $scope.contrato[key] = '';
+    });
+  }
+
   $scope.getData = function() {
     var params = {
       representante: $scope.representante
     };
     formService.getData(params, function(response) {
       console.info('response', response);
-      if(response.qQuery.length === 0){
+      if (response.qQuery.length === 0) {
         alert('Nenhum registro encontrado');
         return;
       }
