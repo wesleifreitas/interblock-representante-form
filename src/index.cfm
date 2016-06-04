@@ -94,7 +94,11 @@
                             </div>
                         </div>
                         <div layout-gt-sm="row">
-                            <md-input-container class="md-block" flex="70">
+                            <md-input-container class="md-block" flex="20">
+                                <label>CEP</label>
+                                <input ng-model="cliente.rev_cli_cep">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="50">
                                 <label>Endereço</label>
                                 <input ng-model="cliente.rev_cli_endereco">
                             </md-input-container>
@@ -138,7 +142,7 @@
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
-                            <md-radio-group ng-model="cliente.rev_cli_tipo" flex="35">
+                            <md-radio-group ng-model="cliente.rev_cli_pessoa" flex="35">
                                 <md-radio-button value="F" class="md-primary">Física</md-radio-button>
                                 <md-radio-button value="J" class="md-primary">Jurídica</md-radio-button>
                             </md-radio-group>
@@ -229,8 +233,8 @@
                         </center>
                         <div layout-gt-sm="row">
                             <md-radio-group ng-model="pagamento.rev_pagamento_tipo">
-                                <md-radio-button value="dinheiro" class="md-primary">Dinheiro</md-radio-button>
-                                <md-radio-button value="cheque" class="md-primary">Cheque</md-radio-button>
+                                <md-radio-button value="D" class="md-primary">Dinheiro</md-radio-button>
+                                <md-radio-button value="C" class="md-primary">Cheque</md-radio-button>
                             </md-radio-group>
                             <md-input-container class="md-block" flex="80">
                                 <label>Entrada</label>
@@ -245,16 +249,16 @@
                                 <input ng-model="pagamento.rev_pagamento_entrada_valor_parcela">
                             </md-input-container>
                         </div>
-                        <div layout-gt-sm="row" ng-if="pagamento.rev_pagamento_tipo === 'cheque'">
+                        <div layout-gt-sm="row" ng-if="pagamento.rev_pagamento_tipo == 'C'">
                             <md-input-container class="md-block" flex="35">
                                 <label>Banco</label>
-                                <input ng-model="pagamento.banco">
+                                <input ng-model="pagamento.rev_pagamento_banco" required="{{pagamento.rev_pagamento_tipo === 'C'}}">
                             </md-input-container>
                             <md-input-container class="md-block" flex="35">
                                 <label>Numeração dos cheques</label>
-                                <input ng-model="pagamento.numeracaoCheque">
+                                <input ng-model="pagamento.rev_pagamento_cheque_numeracao" required="{{pagamento.rev_pagamento_tipo === 'C'}}">
                             </md-input-container>
-                            <md-datepicker ng-model="pagamento.primeiroVencimento" md-placeholder="1°  vencimento">
+                            <md-datepicker ng-model="pagamento.rev_pagamento_cheque_data_inicio" md-placeholder="1° vencimento" required="{{pagamento.rev_pagamento_tipo === 'C'}}">
                             </md-datepicker>
                         </div>
                         <center>
@@ -275,14 +279,14 @@
                             <small class="hint">DD/MM/AAAA</small>
                         </center>
                         <div layout-gt-sm="row">
-                            <md-datepicker ng-model="contrato.dataInstalacao" md-placeholder="Dt. de Instalação" required>
+                            <md-datepicker ng-model="contrato.rev_con_data_instalacao" md-placeholder="Dt. de Instalação" required>
                             </md-datepicker>
-                            <md-datepicker ng-model="contrato.dataInicio" md-placeholder="Início" required>
+                            <md-datepicker ng-model="contrato.rev_con_data_inicio" md-placeholder="Início" required>
                             </md-datepicker>
-                            <md-datepicker ng-model="contrato.dataTermino" md-placeholder="Término" required>
+                            <md-datepicker ng-model="contrato.rev_con_data_fim" md-placeholder="Término" required>
                             </md-datepicker>
-                            <md-datepicker ng-model="contrato.dataRenovacao" md-placeholder="Renovação">
-                            </md-datepicker required>
+                            <md-datepicker ng-model="contrato.rev_con_data_renovacao" md-placeholder="Renovação" required>
+                            </md-datepicker>
                         </div>
                     </form>
                 </div>
