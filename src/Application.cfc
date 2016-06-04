@@ -29,7 +29,7 @@
         hint="I run when the application boots up. If I return false, the application initialization will hault.">
 
         <!--- Application root directory--->
-        <cfset APPLICATION.RootDir = THIS.RootDir />
+        <cfset APPLICATION.RootDir = getDirectoryFromPath(getCurrentTemplatePath()) />
         <!---
             Let's create an encryption key that will be used to
             encrypt and decrypt values throughout the system.
