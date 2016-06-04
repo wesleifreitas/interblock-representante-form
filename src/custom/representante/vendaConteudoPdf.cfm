@@ -177,6 +177,10 @@ table.assinaturas td{
 	font-size: 14px;
 }
 
+.clausulas{
+	font-size: 14px;
+}
+
 
 </style>
 <cfoutput>	
@@ -489,17 +493,106 @@ table.assinaturas td{
 		<cfdocumentitem type="pagebreak" />
 
 		<br/>
+
 		<div class="declara">
-			<!--- #getDeclaracao(data.pagamento.status)# --->
+			<table width="100%" class="block clausulas">
+				<tr>
+					<td><b>PLANO</b></td>
+					<cfset clausulas = arrayNew(1)>
+					<cfscript>
+						arrayAppend(clausulas, "O contratante assina 2 contatros, contrato de locação de equipamentos (com opção de compra) e o contrato de prestação de serviçoes de central.");
+
+						arrayAppend(clausulas, "O prazo de vigencia de ambos os contratos é de 50 meses, sem juros ou correção monetaria do valor das parcelas.");
+
+						arrayAppend(clausulas, "O valor da parcela referente aluguel de equipamentos é revertido para o contratante como valor para aquisição dos equipamentos, portanto quando o valor referente locação de equipamento atigirem o valor dos equipamentos comercializados a vista, o contratante tem como seus os equipamentos passando a pagar somente o valor referente aos serviços.");
+
+						arrayAppend(clausulas, "Os valores referentes à locação de equipamentos poderão ser antecipados, sendo que, serão quitados  no sentido da última parcela para a primeira. Valor este para á aquisição dos equipamentos.");
+
+						arrayAppend(clausulas, "             O cancelamento do plano poderá ser solicitado a qualquer momento, desde que formamente ( carta, fax, email ) a 30 dias antes do efetivo cancelamento. Respeitando sempre as claúsulas referente a este item nos contratos em questão, bem como multa contratual.");
+
+					</cfscript>
+				<tr>
+				<cfloop array="#clausulas#" index="i">
+					<tr>
+						<td>
+							<ul>
+								<li>#i#</li>
+							</ul>
+						</td>
+					</tr>
+				</cfloop>
+
+				<tr>
+					<td><b>BLOQUEADOR AUTOMÁTICO</b></td>
+					<cfscript>
+						clausulas = arrayNew(1);
+						arrayAppend(clausulas, "SISTEMA DE RECONHECIMENTO : Quando qualquer pessoa não autorizada utilizar seu veiculo, com este sistema, após 2 minutos de ligar o veiculo, o sistema solicita ao usuario sua identificação, não recebendo retorno ( identificação), o veiculo aciona o sistema automatico de bloqueio.");
+
+						arrayAppend(clausulas, "O contratante assina 2 contatros, contrato de locação de equipamentos (com opção de compra) e o contrato de prestação de serviçoes de central.");
+					</cfscript>
+				<tr>
+				<cfloop array="#clausulas#" index="i">
+					<tr>
+						<td>
+							<ul>
+								<li>#i#</li>
+							</ul>
+						</td>
+					</tr>
+				</cfloop>
+
+				<tr>
+					<td><b>RASTREADOR</b></td>
+					<cfscript>
+						clausulas = arrayNew(1);
+						arrayAppend(clausulas, "Rastreia e localiza o seu veiculo 1440  vezes por dia - 24 horas de minuto a minuto.");
+
+						arrayAppend(clausulas, " Monitora em tempo real através de seu computador, tablet ou celular, como as principais informações em tempo real referente:  quilometragem, bateria, foto do local, e microfone aberto.");
+
+						arrayAppend(clausulas, "Gera relatório de até 30 dias do ponto a ponto de onde seu veiculo esteve.");
+
+						arrayAppend(clausulas, "Bloqueio atraves do site,  por celular, telefone fixo ou orelhão.");
+					</cfscript>
+				<tr>
+				<cfloop array="#clausulas#" index="i">
+					<tr>
+						<td>
+							<ul>
+								<li>#i#</li>
+							</ul>
+						</td>
+					</tr>
+				</cfloop>
+
+				<!---
+				<tr>
+					<td><b>RECIBO DE VALORES R$</b></td>
+				<tr>
+				<tr>
+					<td>
+						A importância de :
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Ref.:
+					</td>
+				</tr>
+				--->
+			</table>
 		</div>
 
-		<br/><br/>
+		<br/><br/><br/><br/>
 
 		<div class="assinatura-data">
 			_____________________________, ____ de ______________________ de ______	
 		</div>
 
 		<br/><br/><br/>
+
+		<p>O contratante declara que leu e recebeu todas as informações contidas nesta proposta de adesão.</p>
+		<p>O contratante declara que leu e está ciente dos regulamentos dos contratos em que é participanete.</p>
+		<p>O contratante declara que recebeu orientação e está ciente do funcionamento e segredos do sistema.</p>
 
 		<table class="assinaturas">
 			<tr>
@@ -522,7 +615,4 @@ table.assinaturas td{
 			<cfdump var="#cfcatch#">
 		</cfcatch>
 	</cftry>
-
-	<cfscript></cfscript>	
-
 </cfoutput>

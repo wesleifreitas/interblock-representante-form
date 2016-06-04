@@ -318,7 +318,7 @@
 						rev_cli_bairro,
 						rev_cli_cidade,
 						rev_cli_uf,
-						cli_cep,
+						rev_cli_cep,
 						rev_vei_marca,
 						rev_vei_modelo,
 						rev_vei_cor,

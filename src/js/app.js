@@ -324,7 +324,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
       },
       comodato: false
     }, {
-      nome: 'CUSTO ADMINISTRATIVOS',
+      nome: 'CUSTOS ADMINISTRATIVOS',
       valorVista: {
         field: 'rev_s_administrativo_vista',
         value: '0,00'
