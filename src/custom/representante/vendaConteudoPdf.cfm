@@ -33,11 +33,17 @@ table td.sub-titulo2 {
 	width: 100%;
 }
 
+table td.nome {
+	white-space: nowrap;
+	padding-top: 3px;
+	vertical-align: top;
+}
 
 table td.valor {
 	/*white-space: nowrap;*/
 	padding-top: 3px;
 	vertical-align: top;
+	width: 100px;
 }
 
 td.left{
@@ -164,6 +170,13 @@ table.assinaturas td{
 	padding: 15px;
 }
 
+.assumindo{
+	width: 100%;
+	text-align: left;
+	font-weight: bold;
+	font-size: 14px;
+}
+
 
 </style>
 <cfoutput>	
@@ -179,6 +192,7 @@ table.assinaturas td{
 			SELECT
 				rev_codigo
 				,rev_cli_nascimento
+				,rev_pagamento_cheque_data_inicio
 				,rev_con_data_instalacao
 				,rev_con_data_inicio
 				,rev_con_data_fim
@@ -326,146 +340,115 @@ table.assinaturas td{
 		</table>
 		
 		<p>3 - Equipamentos</p>		
-		[EM DESENVOLVIMENTO]
-		<!---
 		<table width="100%" cellspacing="1" class="tbl">
 			<tr>					
 				<td class="titulo2">Descrição</td>
-				<td class="titulo2">Valor Entrada</td>
-				<cfif data.pagamento.locacao_equipamentos EQ 1>
-					<td class="titulo2">Locação Mensal</td>
-				</cfif>
-				<cfif data.pagamento.compra_venda_equipamentos EQ 1>
-					<td class="titulo2">Valor Compra</td>
-				</cfif>
+				<td class="titulo2">Valor a vista</td>			
+				<td class="titulo2">Pag. prazo</td>
+				<td class="titulo2">Locação mensal</td>
 			</tr>			
-			<cfloop query="qQuery">
+			<cfloop array="#data.equipamentos#" index="i">
 				<tr>					
-					<td class="valor">
+					<td class="nome">
 						<span class="value">
-							#qQuery.PRO_NOME#
+							#i.nome#
 						</span>
 					</td>
 					<td class="valor right">
 						<span class="value">
-							#LSCurrencyFormat(qQuery.PRO_VALOR_ENTRADA)#
+							#LSCurrencyFormat(i.valorVista.value)#
 						</span>
 					</td>
-					<cfif data.pagamento.locacao_equipamentos EQ 1>
-						<td class="valor right">
+					<td class="valor right">
+						<span class="value">
+							#LSCurrencyFormat(i.pagamentoPrazo.value)#
+						</span>
+					</td>
+					<td class="valor right">
+						<span class="value">
+							#LSCurrencyFormat(i.locacao.value)#
+						</span>
+					</td>
+				</tr>
+			</cfloop>						
+		</table>
+		<p>4 - Serviços</p>
+		<table width="100%" cellspacing="1" class="tbl">
+			<tr>					
+				<td class="titulo2">Descrição</td>
+				<td class="titulo2">Valor a vista</td>			
+				<td class="titulo2">Pag. prazo</td>
+				<td class="titulo2">Locação mensal</td>
+			</tr>			
+			<cfloop array="#data.servicos#" index="i">
+				<tr>					
+					<td class="nome">
+						<span class="value">
+							#i.nome#
+						</span>
+					</td>
+					<cfif i.comodato EQ true>
+						<td colspan="3" class="valor center">
 							<span class="value">
-								#LSCurrencyFormat(qQuery.PRO_VALOR_MENSAL)#
+								COMODATO
 							</span>
 						</td>
-					</cfif>
-					<cfif data.pagamento.compra_venda_equipamentos EQ 1>
+					<cfelse>
 						<td class="valor right">
 							<span class="value">
-								#LSCurrencyFormat(qQuery.PRO_VALOR_COMPRA)#
+								#LSCurrencyFormat(i.valorVista.value)#
+							</span>
+						</td>
+						<td class="valor right">
+							<span class="value">
+								#LSCurrencyFormat(i.pagamentoPrazo.value)#
+							</span>
+						</td>
+						<td class="valor right">
+							<span class="value">
+								#LSCurrencyFormat(i.locacao.value)#
 							</span>
 						</td>	
-					</cfif>	
+					</cfif>					
 				</tr>
-			</cfloop>			
-			<tr>					
-				<td class="valor">
-					<span class="value">
-						LOCALIZADOS VIVA VOZ
-					</span>
-				</td>
-				<td class="valor center" colspan="3">
-					<span class="value">
-						COMODATO
-					</span>
-				</td>				
-			</tr>
-			<tr>					
-				<td class="valor">
-					<span class="value">
-						RECEPTOR DE SINAIS (SATÉLITE)
-					</span>
-				</td>
-				<td class="valor center" colspan="3">
-					<span class="value">
-						COMODATO
-					</span>
-				</td>				
-			</tr>
+			</cfloop>						
 		</table>
-		--->
-		<p>4 - Serviços</p>
-		[EM DESENVOLVIMENTO]
-		<!---
-		<table width="100%" cellspacing="1" class="tbl">
-			<tr>					
-				<td class="titulo2">Descrição</td>
-				<td class="titulo2">Valor Entrada</td>
-				<td class="titulo2">Locação Mensal</td>
-				<td class="titulo2">Valor Compra</td>
-			</tr>
-			<cfloop query="qQuery">
-				<tr>					
-					<td class="valor">
-						<span class="value">
-							#qQuery.SER_NOME#
-						</span>
-					</td>
-					<td class="valor right">
-						<span class="value">
-							#LSCurrencyFormat(qQuery.SER_VALOR_ENTRADA)#
-						</span>
-					</td>
-					<td class="valor right">
-						<span class="value">
-							#LSCurrencyFormat(qQuery.SER_VALOR_MENSAL)#
-						</span>
-					</td>
-					<td class="valor right">
-						<span class="value">
-							#LSCurrencyFormat(qQuery.SER_VALOR_COMPRA)#
-						</span>
-					</td>		
-				</tr>
-			</cfloop>
-		</table>
-		--->
 
 		<p>5 - Condições de Pagamento</p>
 		
 		<table width="100%" class="block">
-			<!--- DINHEIRO --->
-			<cfif data.pagamento.rev_pagamento_tipo EQ "dinheiro">
+			<tr>
+				<td class="titulo">Entrada:</td>
+				<td class="valor">Dinheiro</td>
+
+				<td class="titulo">Valor:</td>
+				<td class="valor">#LSCurrencyFormat(data.pagamento.rev_pagamento_entrada)#</td>
+
+				<td class="titulo">N° de parcelas:</td>
+				<td class="valor">#data.pagamento.rev_pagamento_entrada_n_parcelas#</td>
+
+				<td class="titulo">Valor da parcela:</td>
+				<td class="valor">#LSCurrencyFormat(data.pagamento.rev_pagamento_entrada_valor_parcela)#</td>
+			</tr>
+			<!--- CHEQUE --->
+			<cfif data.pagamento.rev_pagamento_tipo EQ "C">								
 				<tr>
-					<td class="titulo">Entrada:</td>
-					<td class="valor">Dinheiro</td>
-
-					<td class="titulo">Valor:</td>
-					<td class="valor">#LSCurrencyFormat(data.pagamento.rev_pagamento_entrada)#</td>
-				</tr>
-			<cfelse><!--- CHEQUE --->	
-				<!---
-				<tr>					
-					<td class="titulo">Entrada:</td>
-					<td class="valor">Cheque</td>
-
-					<td class="titulo">Valor:</td>
-					<td class="valor">#LSCurrencyFormat(data.pagamento.rev_pagamento_entrada)#</td>
-
 					<td class="titulo">Banco:</td>
-					<td class="valor">#data.pagamento.cheque_banco#</td>
-				</tr>
-				<tr>
-					<td class="titulo">Cheques:</td>
-					<td class="valor">#data.pagamento.cheques#</td>
-				
-					<td class="titulo">Nº Cheque:</td>
-					<td class="valor">#data.pagamento.cheque_entrada_inicio# ao #data.pagamento.cheque_entrada_fim#</td>
+					<td class="valor">#data.pagamento.rev_pagamento_banco#</td>
 
+					<td class="titulo">Cheques:</td>
+					<td class="valor">#data.pagamento.rev_pagamento_cheque_numeracao#</td>
+				
 					<td class="titulo">1º Vencimento:</td>
-					<td class="valor">#LSDateFormat(data.pagamento.cheque_entrada_primeiro_vencimento,"DD/MM/YYYY")#</td>
+					<td class="valor">#LSDateFormat(qQuery.rev_pagamento_cheque_data_inicio,"DD/MM/YYYY")#</td>
 				</tr>
-				--->
-			</cfif>				
+				
+			</cfif>		
+			<tr>
+				<td colspan="8" class="assumindo">
+					Assumindo ainda #data.pagamento.rev_pagamento_n_parcelas# parcelas de #LSCurrencyFormat(data.pagamento.rev_pagamento_valor_parcela)#
+				</td>
+			</tr>		
 		</table>
 
 		<p>7- Vigência do contrato</p>
@@ -502,6 +485,8 @@ table.assinaturas td{
 				</td>	
 			</tr>
 		</table>
+
+		<cfdocumentitem type="pagebreak" />
 
 		<br/>
 		<div class="declara">

@@ -518,7 +518,10 @@
 					localurl="false"
 		 	 		filename="#APPLICATION.RootDir#/_server/files/venda_#qPdf.rev_codigo#.pdf" 
 		 	 		overwrite="yes" 	 	 			
-		 	 		pagetype="a4"> 		 	 		
+		 	 		pagetype="a4"
+		 	 		unit="cm"
+		 	 		marginTop=".8"
+		 	 		marginbottom=".8">
 					<cfinclude template="vendaConteudoPdf.cfm">
 			</cfdocument>
 
