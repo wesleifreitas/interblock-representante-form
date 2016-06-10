@@ -10,11 +10,8 @@
     <cfset THIS.SetClientCookies = true />
     <cfset THIS.RootDir = getDirectoryFromPath(getCurrentTemplatePath()) />
 
-    <cfset THIS.Mappings = structNew() />
-    <cfset THIS.Mappings["/cfc"] = THIS.RootDir />
-
     <cfparam name="session.loggedIn" default="false" />
-   
+
     <!--- Define the request settings. --->
     <cfsetting
         showdebugoutput="false"
@@ -30,6 +27,11 @@
 
         <!--- Application root directory--->
         <cfset APPLICATION.RootDir = getDirectoryFromPath(getCurrentTemplatePath()) />
+
+        <!--- REST service --->
+        <cfset restDirPath = THIS.RootDir & "custom/representante">
+        <cfset RestInitApplication(restDirPath, "interblock-representante")>
+
         <!---
             Let's create an encryption key that will be used to
             encrypt and decrypt values throughout the system.
@@ -85,10 +87,6 @@
             required="true"
             hint="The page template requested by the user."
             />
-
-        <!--- REST service 
-        <cfset restDirPath = expandPath("./") & "/rest">
-        <cfset RestInitApplication(restDirPath, "interblock-representante")> --->
 
         <!--- If appreset is defined in URL scope then reset the application by calling ApplicationStop --->  
         <cfif structKeyExists(url, "appReset")>

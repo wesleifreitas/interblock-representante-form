@@ -19,7 +19,8 @@
         <cftry>
 	        <cfset body = DeserializeJSON(arguments.body)>
 
-	        <cfinvoke component="cfc.custom.representante.representante"
+	        <cfinvoke 
+	        	component="representante"
 	        	method="saveData"
 				dsn="#body.dsn#"
 				representante="#body.representante#"
