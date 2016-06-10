@@ -113,10 +113,10 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     }
 
     $scope.representante = {
-      nome: 'representante',
-      senha: 'senha',
-      vendedor: 'vendedor',
-      operacao: 11606,
+      nome: '',
+      senha: '',
+      vendedor: '',
+      operacao: '',
       autorizado: false
     };
 
@@ -367,6 +367,14 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     $scope.init();
   }
 
+  $scope.getDisabled = function(representanteForm) {
+    if (representanteForm.$invalid === true || representanteForm.loading) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   $scope.login = function() {
 
     if ($scope.representante.nome === '' || $scope.representante.senha === '' || $scope.representante.vendedor === '' || $scope.representante.operacao === '') {
@@ -390,9 +398,9 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
 
   $scope.formClear = function() {
     // loop em representante
-    angular.forEach($scope.representante, function(index, key) {
-      $scope.representante[key] = '';
-    });
+    //angular.forEach($scope.representante, function(index, key) {
+      $scope.representante['autorizado'] = false;
+    //});
 
     // loop em cliente
     angular.forEach($scope.cliente, function(index, key) {

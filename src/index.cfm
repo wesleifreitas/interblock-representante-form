@@ -35,19 +35,19 @@
                     <form name="loginForm" layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Representante</label>
-                            <input ng-model="representante.nome" ng-disabled="representante.autorizado">
+                            <input ng-model="representante.nome" ng-disabled="representante.autorizado" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Senha do representante</label>
-                            <input ng-model="representante.senha" type="password" ng-disabled="representante.autorizado">
+                            <input ng-model="representante.senha" type="password" ng-disabled="representante.autorizado" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Vendedor</label>
-                            <input ng-model="representante.vendedor">
+                            <input ng-model="representante.vendedor" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Código da operação</label>
-                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado">
+                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado" required>
                             <div class="operacao-hint">
                                 <span>Preencha com 0 (zero) para uma nova operação ou digite outro número para consultar operação já salva.</span>
                             </div>
@@ -293,7 +293,7 @@
                 <!-- </md-content> -->
             </div>
             <md-content ng-show="representante.autorizado" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-                <md-button class="md-raised md-primary" ng-click="saveData()" ng-disabled="representanteForm.$invalid === true || representanteForm.loading">
+                <md-button class="md-raised md-primary" ng-click="saveData()" ng-disabled="getDisabled(representanteForm)">
                     <md-icon class="material-icons">picture_as_pdf</md-icon>
                     Salvar e gerar PDF
                 </md-button>
