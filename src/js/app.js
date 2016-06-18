@@ -3,7 +3,7 @@ console.info('app.js init');
 var config = {
   dsn: 'px_interblock_sql_local'
 }
-var app = angular.module('angularApp', ['ngAria', 'ngMaterial', 'ngRoute'], function() {});
+var app = angular.module('angularApp', ['ngAria', 'ngMaterial', 'ngRoute', 'ui.mask'], function() {});
 
 app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', '$mdDateLocaleProvider', function($routeProvider, $locationProvider, $mdThemingProvider, $mdDateLocaleProvider) {
 
@@ -363,6 +363,23 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     $scope.formClear();
   }
 
+  $scope.rev_cli_pessoaChange = function(event) {
+    // Verificar tipo de pessoa
+    if ($scope.cliente.rev_cli_pessoa === 'F') {
+      $scope.rev_cli_pessoa_label = 'CPF';
+      $scope.rev_cli_pessoa_mask = "999.999.999-99";
+
+      $scope.rev_cli_rgInscricaoEstadual_label = 'RG';
+      $scope.rev_cli_rgInscricaoEstadual_mask = '99.999.999-*';
+    } else { // J
+      $scope.rev_cli_pessoa_label = 'CNPJ';
+      $scope.rev_cli_pessoa_mask = "99.999.999/9999-99";
+
+      $scope.rev_cli_rgInscricaoEstadual_label = 'Inscrição estadual';
+      $scope.rev_cli_rgInscricaoEstadual_mask = '';
+    }
+  }
+
   $scope.restart = function() {
     $scope.init();
   }
@@ -399,7 +416,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
   $scope.formClear = function() {
     // loop em representante
     //angular.forEach($scope.representante, function(index, key) {
-      $scope.representante['autorizado'] = false;
+    $scope.representante['autorizado'] = false;
     //});
 
     // loop em cliente
@@ -435,6 +452,10 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     angular.forEach($scope.contrato, function(index, key) {
       $scope.contrato[key] = '';
     });
+
+
+    $scope.cliente.rev_cli_pessoa = 'F';
+    $scope.rev_cli_pessoaChange();
   }
 
   $scope.getData = function() {

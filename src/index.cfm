@@ -45,9 +45,9 @@
                             <label>Vendedor</label>
                             <input ng-model="representante.vendedor" required>
                         </md-input-container>
-                        <md-input-container class="md-block" flex-gt-xs>
+                        <md-input-container class="md-block md-input-has-placeholder" flex-gt-xs>
                             <label>Código da operação</label>
-                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado" required>
+                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado" type="number">
                             <div class="operacao-hint">
                                 <span>Preencha com 0 (zero) para uma nova operação ou digite outro número para consultar operação já salva.</span>
                             </div>
@@ -81,22 +81,21 @@
                                     <div ng-message="required">Campo obrigatório.</div>
                                 </div>
                             </md-input-container>
-                            <div layout="column">
-                                <md-datepicker name="clienteNascimento" ng-model="cliente.rev_cli_nascimento" md-placeholder="Dt. Nascimento" required>
-                                </md-datepicker>
-                                <div class="date-validation">
-                                    <!--
-                                    <div ng-show="representanteForm.clienteNascimento.$error.required && representanteForm.clienteNascimento.$error.valid === false">Data obrigatória.</div>
-                                    <div ng-show="representanteForm.clienteNascimento.$error.valid">Data inválida. <span class="hint">DD/MM/AAAA</span></div>
-                                    -->
-                                    <span class="hint">DD/MM/AAAA</span>
-                                </div>
+                            <div layout="column" class="datepicker-column">
+                                <label>Dt. Nascimento</label>
+                                <md-datepicker name="clienteNascimento" ng-model="cliente.rev_cli_nascimento" md-placeholder="" required>
+                                </md-datepicker>                              
+                                <!--
+                                <div ng-show="representanteForm.clienteNascimento.$error.required && representanteForm.clienteNascimento.$error.valid === false">Data obrigatória.</div>
+                                <div ng-show="representanteForm.clienteNascimento.$error.valid">Data inválida. <span class="hint">DD/MM/AAAA</span></div>
+                                -->
+                                <span class="hint">DD/MM/AAAA</span>                                
                             </div>
                         </div>
                         <div layout-gt-sm="row">
-                            <md-input-container class="md-block" flex="20">
+                            <md-input-container class="md-block md-input-has-placeholder" flex="20">
                                 <label>CEP</label>
-                                <input ng-model="cliente.rev_cli_cep">
+                                <input ng-model="cliente.rev_cli_cep" ui-mask="99999-999">
                             </md-input-container>
                             <md-input-container class="md-block" flex="50">
                                 <label>Endereço</label>
@@ -142,17 +141,17 @@
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
-                            <md-radio-group ng-model="cliente.rev_cli_pessoa" flex="35">
+                            <md-radio-group ng-model="cliente.rev_cli_pessoa" flex="35" ng-change="rev_cli_pessoaChange($event)">
                                 <md-radio-button value="F" class="md-primary">Física</md-radio-button>
                                 <md-radio-button value="J" class="md-primary">Jurídica</md-radio-button>
                             </md-radio-group>
-                            <md-input-container class="md-block" flex="35">
-                                <label>CPF / CNPJ</label>
-                                <input ng-model="cliente.rev_cli_cpfCnpj">
+                            <md-input-container class="md-block md-input-has-placeholder" flex="35">
+                                <label>{{rev_cli_pessoa_label}}</label>
+                                <input ng-model="cliente.rev_cli_cpfCnpj" ui-mask="{{rev_cli_pessoa_mask}}">
                             </md-input-container>
-                            <md-input-container class="md-block" flex="35">
-                                <label>RG / Inscrição estadual</label>
-                                <input ng-model="cliente.rev_cli_rgInscricaoEstadual">
+                            <md-input-container class="md-block md-input-has-placeholder" flex="35">
+                                <label>{{rev_cli_rgInscricaoEstadual_label}}</label>
+                                <input ng-model="cliente.rev_cli_rgInscricaoEstadual" ui-mask="{{rev_cli_rgInscricaoEstadual_mask}}">
                             </md-input-container>
                         </div>
                         <div layout-gt-sm="row">
@@ -275,18 +274,33 @@
                             </md-input-container>
                         </div>
                         <center>
-                            <h3>Vigência do contrato</h3>
-                            <small class="hint">DD/MM/AAAA</small>
+                            <h3>Vigência do contrato</h3>                  
                         </center>
                         <div layout-gt-sm="row">
-                            <md-datepicker ng-model="contrato.rev_con_data_instalacao" md-placeholder="Dt. de Instalação" required>
-                            </md-datepicker>
-                            <md-datepicker ng-model="contrato.rev_con_data_inicio" md-placeholder="Início" required>
-                            </md-datepicker>
-                            <md-datepicker ng-model="contrato.rev_con_data_fim" md-placeholder="Término" required>
-                            </md-datepicker>
-                            <md-datepicker ng-model="contrato.rev_con_data_renovacao" md-placeholder="Renovação" required>
-                            </md-datepicker>
+                            <div layout="column" class="datepicker-column">
+                                <label>Dt. de Instalação</label>
+                                <md-datepicker ng-model="contrato.rev_con_data_instalacao" md-placeholder="" required>
+                                </md-datepicker>
+                                <span class="hint">DD/MM/AAAA</span>
+                            </div>
+                            <div layout="column" class="datepicker-column">
+                                <label>Dt. Início do contrato</label>
+                                <md-datepicker ng-model="contrato.rev_con_data_inicio" md-placeholder="" required>
+                                </md-datepicker>
+                                <span class="hint">DD/MM/AAAA</span>
+                             </div>
+                            <div layout="column" class="datepicker-column">
+                                <label>Dt. Término do contrato</label>
+                                <md-datepicker ng-model="contrato.rev_con_data_fim" md-placeholder="" required>
+                                </md-datepicker>
+                                <span class="hint">DD/MM/AAAA</span>
+                            </div>
+                            <div layout="column" class="datepicker-column">
+                                <label>Dt. Renovação do contrato</label>
+                                <md-datepicker ng-model="contrato.rev_con_data_renovacao" md-placeholder="" required>
+                                </md-datepicker>
+                                <span class="hint">DD/MM/AAAA</span>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -319,6 +333,8 @@
     <script src="lib/angular-route/angular-route.min.js"></script>
     <!-- Moment.js -->
     <script src="lib/moment/min/moment-with-locales.min.js"></script>
+    <!-- Angular ui-mask -->
+    <script src="lib/angular-ui-mask/dist/mask.min.js"></script>
     <!-- Angular App -->
     <script src="js/app.js"></script>
 </body>

@@ -24,12 +24,29 @@ h3 {
 	color: grey;
 	text-align: justify;
 }
-.hint {
-	color: grey;
-}
 .error {
 	width: 100%;
 	text-align: center;
 	color: #A94442;
 	padding-top: 10px;
+}
+.md-input-has-placeholder label {
+	color: rgba(0, 0, 0, 0.54);
+	bottom: 100%;
+	left: 0;
+	right: auto;
+}
+.datepicker-column label {
+	color: rgba(0, 0, 0, 0.45);
+	font-size: 12px;
+	font-weight: bold;
+	padding-left: 18px;
+}
+.datepicker-column md-datepicker {
+	margin-top: 5px;
+}
+.datepicker-column .hint {
+	color: grey;
+	font-size: 10px;
+	padding-left: 18px;
 }
