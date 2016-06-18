@@ -29,6 +29,7 @@
     "angular": "~1.5.4",
     "angular-material": "~1.0.7",
     "angular-route": "~1.5.3",
-    "moment": "~2.13.0"
+    "moment": "~2.13.0",
+    "angular-ui-mask": "~1.8.5"
   }
 }
