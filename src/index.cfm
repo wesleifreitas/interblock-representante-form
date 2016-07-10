@@ -233,6 +233,7 @@
                         <div layout-gt-sm="row">
                             <md-radio-group ng-model="pagamento.rev_pagamento_tipo">
                                 <md-radio-button value="D" class="md-primary">Dinheiro</md-radio-button>
+                                <md-radio-button value="B" class="md-primary">Boleto</md-radio-button>
                                 <md-radio-button value="C" class="md-primary">Cheque</md-radio-button>
                             </md-radio-group>
                             <md-input-container class="md-block" flex="80">

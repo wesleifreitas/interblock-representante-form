@@ -228,7 +228,7 @@
 			<!--- EQUIPAMENTOS - START --->
 			<cfloop array="#arguments.equipamentos#" index="i">
 				<cfset i.valorVista.value = replace(REReplace(i.valorVista.value, '[^0-9,]', "", "all"),",",".")>
-				<cfset i.pagamentoPrazo.value = REReplace(i.pagamentoPrazo.value, '[^0-9]', "", "all")>
+				<cfset i.pagamentoPrazo.value = replace(REReplace(i.pagamentoPrazo.value, '[^0-9,]', "", "all"),",",".")>
 				<cfset i.locacao.value = replace(REReplace(i.locacao.value, '[^0-9,]', "", "all"),",",".")>
 
 				<cfif i.valorVista.value EQ "">
@@ -245,7 +245,7 @@
 			<!--- SERVICOS - START --->
 			<cfloop array="#arguments.servicos#" index="i">
 				<cfset i.valorVista.value = replace(REReplace(i.valorVista.value, '[^0-9,]', "", "all"),",",".")>
-				<cfset i.pagamentoPrazo.value = REReplace(i.pagamentoPrazo.value, '[^0-9]', "", "all")>
+				<cfset i.pagamentoPrazo.value = replace(REReplace(i.pagamentoPrazo.value, '[^0-9,]', "", "all"),",",".")>
 				<cfset i.locacao.value = replace(REReplace(i.locacao.value, '[^0-9,]', "", "all"),",",".")>
 
 				<cfif i.valorVista.value EQ "">

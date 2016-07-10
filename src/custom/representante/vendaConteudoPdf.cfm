@@ -423,7 +423,13 @@ table.assinaturas td{
 		<table width="100%" class="block">
 			<tr>
 				<td class="titulo">Entrada:</td>
-				<td class="valor">Dinheiro</td>
+				<cfif data.pagamento.rev_pagamento_tipo EQ "D">
+					<td class="valor">Dinheiro</td>
+				<cfelseif data.pagamento.rev_pagamento_tipo EQ "B">
+					<td class="valor">Boleto</td>
+				<cfelse>
+					<td class="valor">Cheque</td>
+				</cfif>
 
 				<td class="titulo">Valor:</td>
 				<td class="valor">#LSCurrencyFormat(data.pagamento.rev_pagamento_entrada)#</td>

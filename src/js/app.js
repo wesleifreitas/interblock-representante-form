@@ -1,7 +1,7 @@
 console.info('app.js init');
 
 var config = {
-  dsn: 'px_interblock_sql_local'
+  dsn: 'px_interblock_sql'
 }
 var app = angular.module('angularApp', ['ngAria', 'ngMaterial', 'ngRoute', 'ui.mask'], function() {});
 
@@ -149,7 +149,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     };
 
     $scope.equipamentos = [{
-      nome: 'BLOQUEADOR AUTOMÁTICO',
+      nome: 'BLOQUEADOR AUTOMÁTICO (TRISAT)',
       valorVista: {
         field: 'rev_e_bloqueador_automatico_vista',
         value: '0,00'
@@ -445,7 +445,9 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
 
     // loop em pagamento
     angular.forEach($scope.pagamento, function(index, key) {
-      $scope.pagamento[key] = '';
+      if (key !== 'rev_pagamento_tipo') {
+        $scope.pagamento[key] = '';
+      }
     });
 
     // loop em contrato
