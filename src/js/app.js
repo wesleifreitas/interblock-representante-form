@@ -117,7 +117,8 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
       senha: '',
       vendedor: '',
       operacao: '',
-      autorizado: false
+      autorizado: false,
+      enviarEmail: true
     };
 
     $scope.cliente = {
@@ -360,7 +361,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', function(formSe
     };
 
     // Apagar dados de testes
-    $scope.formClear();
+    //$scope.formClear();
   }
 
   $scope.rev_cli_pessoaChange = function(event) {

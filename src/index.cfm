@@ -47,7 +47,7 @@
                         </md-input-container>
                         <md-input-container class="md-block md-input-has-placeholder" flex-gt-xs>
                             <label>Código da operação</label>
-                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado" type="number">
+                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado" type="number" required>
                             <div class="operacao-hint">
                                 <span>Preencha com 0 (zero) para uma nova operação ou digite outro número para consultar operação já salva.</span>
                             </div>
@@ -308,10 +308,15 @@
                 <!-- </md-content> -->
             </div>
             <md-content ng-show="representante.autorizado" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-                <md-button class="md-raised md-primary" ng-click="saveData()" ng-disabled="getDisabled(representanteForm)">
-                    <md-icon class="material-icons">picture_as_pdf</md-icon>
-                    Salvar e gerar PDF
-                </md-button>
+                <div layout="column">
+                    <md-button class="md-raised md-primary" ng-click="saveData()" ng-disabled="getDisabled(representanteForm)">
+                        <md-icon class="material-icons">picture_as_pdf</md-icon>
+                        Salvar e gerar PDF
+                    </md-button>                
+                    <md-checkbox class="md-primary" ng-model="representante.enviarEmail" aria-label="Enviar e-mail">
+                        Enviar e-mail para a Interblock
+                    </md-checkbox>
+                <div>
                 <md-progress-linear md-mode="indeterminate" ng-show="representanteForm.loading"></md-progress-linear>
                 <!--
                     <md-button class="md-raised md-primary">

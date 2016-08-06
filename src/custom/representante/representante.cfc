@@ -29,6 +29,19 @@
 			<cfquery datasource="#arguments.dsn#" name="qLogin">
 				SELECT
 					CF002_NR_GRUPO
+					,CF002_NR_INST
+					,CF002_NR_CNPJ
+					,CF002_NM_INST
+					,CF002_NM_ABREV
+					,CF002_NM_END
+					,CF002_NR_END
+					,CF002_NM_COMPL
+					,CF002_NM_BAIRRO
+					,CF002_NM_CIDADE
+					,CF002_NM_ESTADO
+					,CF002_NR_CEP
+					,CF002_NR_TEL
+					,CF002_NR_TEL2
 				FROM
 					CF002
 				WHERE
@@ -468,6 +481,38 @@
 				</cfif>
 			</cfif>
 
+			<!--- enviarEmail === true?  --->
+			<cfif arguments.representante.enviarEmail>
+				<cfquery datasource="#arguments.dsn#" name="qSMTP">
+					SELECT
+						*
+					FROM
+						smtp
+					WHERE
+						smtp_id = 1
+				</cfquery>
+
+				<cfset qSMTP.smtp_password = decrypt(qSMTP.smtp_password, "atopng2016")>	
+
+				<cfset result["qSMTP"] = qSMTP>
+
+				<cfmail server="#qSMTP.smtp_server#"
+					username="#qSMTP.smtp_username#"
+					password="#qSMTP.smtp_password#"
+					port="#qSMTP.smtp_port#"
+					subject="[REPRESENTANTE] Pré proposta #result.pdf.qPdf.rev_codigo#"
+					from="no-reply@interblock.com.br"
+					to="weslei.rfreitas@gmail.com"
+					mimeattach="#APPLICATION.RootDir#/_server/files/venda_#qPdf.rev_codigo#.pdf"
+					type="html"
+					>
+
+					<cfinclude template="emailVenda.cfm">
+
+				</cfmail>
+			
+			</cfif>
+			
 			<cfset result["rev_codigo"] = result["pdf"].qPdf.rev_codigo>
 			<!--- <cfset result["rQuery"] = rQuery> --->				
 			<cfset result["success"] = true>
