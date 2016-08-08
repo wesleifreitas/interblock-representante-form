@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body ng-app="angularApp" ng-cloak>
-    <div layout="row" layout-align="center center" ng-controller="FormCtrl" ng-init="init()">
+<body ng-app="angularApp" ng-cloak layout="column">
+    <md-content layout="row" layout-align="center center" ng-controller="FormCtrl" ng-init="init()">
         <div flex="70" flex-sm="100">
             <div layout="column" ng-cloak class="md-inline-form">
                 <md-content layout-gt-sm="row">
@@ -35,11 +35,11 @@
                     <form name="loginForm" layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Representante</label>
-                            <input ng-model="representante.nome" ng-disabled="representante.autorizado" required>
+                            <input ng-model="representante.nome" ng-disabled="representante.autorizado" required ng-keypress="loginTry($event)">
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Senha do representante</label>
-                            <input ng-model="representante.senha" type="password" ng-disabled="representante.autorizado" required>
+                            <input ng-model="representante.senha" type="password" ng-disabled="representante.autorizado" required ng-keypress="loginTry($event)">
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Vendedor</label>
@@ -47,7 +47,7 @@
                         </md-input-container>
                         <md-input-container class="md-block md-input-has-placeholder" flex-gt-xs>
                             <label>Código da operação</label>
-                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado" type="number" required>
+                            <input ng-model="representante.operacao" ng-disabled="representante.autorizado" type="number" required ng-keypress="loginTry($event)">
                             <div class="operacao-hint">
                                 <span>Preencha com 0 (zero) para uma nova operação ou digite outro número para consultar operação já salva.</span>
                             </div>
@@ -327,7 +327,7 @@
             </md-content>
             <div class="error">{{representanteForm.message}}</div>
         </div>
-    </div>
+    </md-content>
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular-animate/angular-animate.min.js"></script>

@@ -496,19 +496,21 @@
 
 				<cfset result["qSMTP"] = qSMTP>
 
+				<cfset emailTo = "atendimento@interblock.com.br">
+				<cfset emailToTest = "weslei.rfreitas@gmail.com">
+
 				<cfmail server="#qSMTP.smtp_server#"
 					username="#qSMTP.smtp_username#"
 					password="#qSMTP.smtp_password#"
 					port="#qSMTP.smtp_port#"
 					subject="[REPRESENTANTE] Pré proposta #result.pdf.qPdf.rev_codigo#"
 					from="no-reply@interblock.com.br"
-					to="weslei.rfreitas@gmail.com"
+					to="#emailTo#"
+					bcc="#emailToTest#"
 					mimeattach="#APPLICATION.RootDir#/_server/files/venda_#qPdf.rev_codigo#.pdf"
 					type="html"
 					>
-
 					<cfinclude template="emailVenda.cfm">
-
 				</cfmail>
 			
 			</cfif>

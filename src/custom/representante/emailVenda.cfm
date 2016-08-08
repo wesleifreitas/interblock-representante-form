@@ -1,29 +1,28 @@
-<cfset setLocale("Portuguese (Brazilian)")>
-<cfprocessingDirective pageencoding="utf-8">
-<cfset setEncoding("form","utf-8")> 
-
+<!---
 <style>
-/*http://stackoverflow.com/questions/10618917/need-thin-table-borders-in-pdf-generated-by-cfdocument*/
-.tbl {
-	background-color:#000;
-}
-.tbl td,th,tr,caption{
-	background-color:#fff
-}
+	/*http://stackoverflow.com/questions/10618917/need-thin-table-borders-in-pdf-generated-by-cfdocument*/
+	.tbl {
+		background-color:#000;
+	}
+	.tbl td,th,tr,caption{
+		background-color:#fff
+	}
+	.tbl tr td:first-child {
+		font-weight: bold;
+		color: red;
+	}
 </style>
-
+--->
 <cfoutput>	
+	<cfset setLocale("Portuguese (Brazilian)")>	
+	
 	<h2>Pré proposta #qPdf.rev_codigo#</h2>
+	<h3>DADOS DO REPRESENTANTE</h3>
 
-	<table  cellspacing="1" class="tbl">
-		<tr>
-			<td colspan="2" align="center">
-				<b>Dados do representante</b>
-			</td>
-		</tr>
+	<table cellspacing="1" class="tbl">
 		<tr>
 			<td>
-				Código do representante:
+				<b>Representante:</b>
 			</td>
 			<td>
 				#qLogin.CF002_NR_INST#
@@ -31,7 +30,7 @@
 		</tr>
 		<tr>
 			<td>
-				Unidade:
+				<b>Unidade:</b>
 			</td>
 			<td>
 				#qLogin.CF002_NM_ABREV#
@@ -39,7 +38,7 @@
 		</tr>
 		<tr>
 			<td>
-				Usuário:
+				<b>Usuário:</b>
 			</td>
 			<td>
 				#qLogin.CF002_NM_INST#
@@ -47,35 +46,43 @@
 		</tr>
 		<tr>
 			<td>
-				Vendedor:
+				<b>Vendedor:</b>
 			</td>
 			<td>
 				#arguments.REPRESENTANTE.vendedor#
 			</td>
 		</tr>
-		<tr>
-			<td>
-				Telefone:
-			</td>
-			<td>
-				[Telefone]
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Celular:
-			</td>
-			<td>
-				[Celular]
-			</td>
-		</tr>
+		<cfif len(qLogin.CF002_NR_TEL) EQ 10>
+			<tr>
+				<td>
+					<b>Telefone:</b>
+				</td>
+				<td>
+					#mid(qLogin.CF002_NR_TEL, 1, 2)#-#mid(qLogin.CF002_NR_TEL, 3, 4)#-#mid(qLogin.CF002_NR_TEL, 7, 4)#
+				</td>
+			</tr>
+		</cfif> 
+		<cfif len(qLogin.CF002_NR_TEL2) GTE 10>
+			<tr>
+				<td>
+					<b>Celular:</b>
+				</td>
+				<td>
+					#mid(qLogin.CF002_NR_TEL2, 1, 2)#-#mid(qLogin.CF002_NR_TEL2, 3, 5)#-#mid(qLogin.CF002_NR_TEL2, 8, 4)#
+				</td>
+			</tr>
+		</cfif>
 	</table>
 
-	<p>
-		<i>Endereço:</i>
-	</p>
+	<h3>ENDEREÇO</h3>
 
+	<cfset endereco = qLogin.CF002_NM_END & ", n° " & qLogin.CF002_NR_END>
+	<cfif qLogin.CF002_NM_COMPL NEQ "">
+		<cfset endereco = endereco & " " & qLogin.CF002_NM_COMPL>
+	</cfif>	
 	<p>
-		adfasdf asd fasdf asdf
+		#endereco#
+		<cfset endereco = qLogin.CF002_NM_BAIRRO & " - " & qLogin.CF002_NM_CIDADE & ", " & qLogin.CF002_NM_ESTADO & " - " & mid(qLogin.CF002_NR_CEP, 1, 5) & "-" & mid(qLogin.CF002_NR_CEP, 6, 3)>
+		<br>#endereco#
 	</p>
 </cfoutput>

@@ -1,187 +1,184 @@
 <style>
+	/*
+	table {
+		font-size: 14px;
+		table-layout: fixed;
+	    width: 100%;
+	}
+	*/
 
-/*
-table {
-	font-size: 14px;
-	table-layout: fixed;
-    width: 100%;
-}
-*/
+	table td.titulo {
+		font-weight: bold;
+		white-space: nowrap;
+		width: 1%;
+		text-align:right;
+		vertical-align: top;
+		padding-top: 1px;
+	}
 
-table td.titulo {
-	font-weight: bold;
-	white-space: nowrap;
-	width: 1%;
-	text-align:right;
-	vertical-align: top;
-	padding-top: 1px;
-}
+	table td.titulo2 {
+		/*font-style: italic;*/
+		/*white-space: nowrap;
+		width: 1%;*/
+		font-weight: bold;
+		text-align:center;
+		vertical-align: top;
+		padding-top: 3px;
+	}
 
-table td.titulo2 {
-	/*font-style: italic;*/
-	/*white-space: nowrap;
-	width: 1%;*/
-	font-weight: bold;
-	text-align:center;
-	vertical-align: top;
-	padding-top: 3px;
-}
+	table td.sub-titulo2 {
+		font-style: italic;
+		text-align: center;
+		width: 100%;
+	}
 
-table td.sub-titulo2 {
-	font-style: italic;
-	text-align: center;
-	width: 100%;
-}
+	table td.nome {
+		white-space: nowrap;
+		padding-top: 3px;
+		vertical-align: top;
+	}
 
-table td.nome {
-	white-space: nowrap;
-	padding-top: 3px;
-	vertical-align: top;
-}
+	table td.valor {
+		/*white-space: nowrap;*/
+		padding-top: 3px;
+		vertical-align: top;
+		width: 100px;
+	}
 
-table td.valor {
-	/*white-space: nowrap;*/
-	padding-top: 3px;
-	vertical-align: top;
-	width: 100px;
-}
+	td.left{
+		text-align: left;
+	}
 
-td.left{
-	text-align: left;
-}
+	td.right: {
+		text-align: right;
+	}
 
-td.right: {
-	text-align: right;
-}
+	td.center: {
+		text-align: center;
+	}
 
-td.center: {
-	text-align: center;
-}
+	h1 {
+		font-size: 30px;
+		text-align:center;
+	}
 
-h1 {
-	font-size: 30px;
-	text-align:center;
-}
+	h3 {
+		text-align:center;
+		/*text-decoration: underline;*/
+	}
 
-h3 {
-	text-align:center;
-	/*text-decoration: underline;*/
-}
+	h4 {
+		font-style: italic;
+		font-weight: normal;
+		text-align:center;
+		/*text-decoration: underline;*/
+	}
 
-h4 {
-	font-style: italic;
-	font-weight: normal;
-	text-align:center;
-	/*text-decoration: underline;*/
-}
+	hr {
+	    border: 0;
+	    height: 0;
+	    border-top: 1px solid rgba(0, 0, 0, 0.1);    
+	}
 
-hr {
-    border: 0;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);    
-}
+	p.descricao {	
+	    list-style: disc outside none;
+	    text-align: justify;
+	    /*background: #ccc;*/
+	}
 
-p.descricao {	
-    list-style: disc outside none;
-    text-align: justify;
-    /*background: #ccc;*/
-}
+	/*http://stackoverflow.com/questions/10618917/need-thin-table-borders-in-pdf-generated-by-cfdocument*/
+	.tbl {
+		background-color:#000;
+	}
+	.tbl td,th,tr,caption{
+		background-color:#fff
+	}
 
-/*http://stackoverflow.com/questions/10618917/need-thin-table-borders-in-pdf-generated-by-cfdocument*/
-.tbl {
-	background-color:#000;
-}
-.tbl td,th,tr,caption{
-	background-color:#fff
-}
+	table
+	{ 
+		font-size: 14px;
+		table-layout: fixed;
+	    margin-left: auto;
+	    margin-right: auto;	  
+	}
 
-table
-{ 
-	font-size: 14px;
-	table-layout: fixed;
-    margin-left: auto;
-    margin-right: auto;	  
-}
+	div.centered 
+	{
+	    text-align: center;
+	}
 
-div.centered 
-{
-    text-align: center;
-}
+	div.centered table
+	{
+	    margin: 0 auto; 
+	    text-align: left;
+	}
 
-div.centered table
-{
-    margin: 0 auto; 
-    text-align: left;
-}
+	span.value {
+		text-align: center;
+		color: #222283;
+	}
 
-span.value {
-	text-align: center;
-	color: #222283;
-}
+	span.value-right {
+		text-align: right;
+		color: #222283;
+	}
 
-span.value-right {
-	text-align: right;
-	color: #222283;
-}
+	table td.header2 {
+		/*white-space: nowrap;*/
+		padding-top: 3px;
+		padding-left: 15px;
+		vertical-align: top;
+		text-align: center;
+	}
 
-table td.header2 {
-	/*white-space: nowrap;*/
-	padding-top: 3px;
-	padding-left: 15px;
-	vertical-align: top;
-	text-align: center;
-}
+	table.header-item {    
+	    width: 100%;
+	    text-align: center;
+	}
 
-table.header-item {    
-    width: 100%;
-    text-align: center;
-}
+	td.header-item {
+	    border: 1px solid black;
+	}
 
-td.header-item {
-    border: 1px solid black;
-}
+	table.block {    
+	    width: 100%;
+	    text-align: left;
+	    border: 1px solid black;
+	}
 
-table.block {    
-    width: 100%;
-    text-align: left;
-    border: 1px solid black;
-}
+	table.loop td {
+		/*border-collapse: collapse;
+	    border: 1px solid black;*/
+	}
 
-table.loop td {
-	/*border-collapse: collapse;
-    border: 1px solid black;*/
-}
+	.declara{
+		font-size: 15px;
+	}
 
-.declara{
-	font-size: 15px;
-}
+	div.assinatura-data{
+		width: 100%;
+		text-align: right;
+	}
 
-div.assinatura-data{
-	width: 100%;
-	text-align: right;
-}
+	table.assinaturas{
+		text-align: center;
+		border-spacing: 10px;
+		border-collapse: separate;
+	}
+	table.assinaturas td{
+		padding: 15px;
+	}
 
-table.assinaturas{
-	text-align: center;
-	border-spacing: 10px;
-	border-collapse: separate;
-}
-table.assinaturas td{
-	padding: 15px;
-}
+	.assumindo{
+		width: 100%;
+		text-align: left;
+		font-weight: bold;
+		font-size: 14px;
+	}
 
-.assumindo{
-	width: 100%;
-	text-align: left;
-	font-weight: bold;
-	font-size: 14px;
-}
-
-.clausulas{
-	font-size: 14px;
-}
-
-
+	.clausulas{
+		font-size: 14px;
+	}
 </style>
 <cfoutput>	
 	<cfset setLocale("Portuguese (Brazilian)")>	
