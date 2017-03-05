@@ -1,7 +1,7 @@
 console.info('app.js init', new Date().getTime());
 
 var config = {
-    dsn: 'px_interblock_sql'
+    dsn: 'px_interblock_sql_local'
 }
 var app = angular.module('angularApp', ['ngAria', 'ngMaterial', 'ngRoute', 'ui.mask'], function() {});
 
@@ -42,47 +42,31 @@ app.factory('formService', ['$http', function($http) {
 
     return service;
 
-    function login(params, callback) {
+    function login(params) {
         params.dsn = config.dsn;
-        $http({
+        return $http({
             method: 'POST',
             url: 'custom/representante/representante.cfc?method=login',
             params: params
-        }).success(function(response) {
-            callback(response);
-        }).
-        error(function(data, status, headers, config) {
-            // Erro
-            alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
-        });
+        })
     }
 
     function getData(params, callback) {
         params.dsn = config.dsn;
-        $http({
+        return $http({
             method: 'POST',
             url: 'custom/representante/representante.cfc?method=getData',
             params: params
-        }).success(function(response) {
-            callback(response);
-        }).
-        error(function(data, status, headers, config) {
-            // Erro
-            alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
-        });
+        })
     }
 
     function saveData(params, callback) {
         params.dsn = config.dsn;
-        $http({
+        return $http({
             method: 'POST',
             url: '../../rest/interblock-representante/service/form',
             data: params
-        }).then(function successCallback(response) {
-            callback(response);
-        }, function errorCallback(response) {
-            alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
-        });
+        })
     }
 
 }]);
@@ -409,15 +393,18 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
         var params = {
             representante: $scope.representante
         };
-        formService.login(params, function(response) {
-            //console.info('response', response);
-            $timeout(function() {
-                $scope.loginForm.error = !response.success;
-                $scope.loginForm.message = response.message;
-                $scope.representante.autorizado = response.autorizado;
-                $scope.loginForm.loading = false;
-            }, 1500);
-        })
+        formService.login(params)
+            .then(function success(response) {
+                console.info('response', response);
+                $timeout(function() {
+                    $scope.loginForm.error = !response.data.success;
+                    $scope.loginForm.message = response.data.message;
+                    $scope.representante.autorizado = response.data.autorizado;
+                    $scope.loginForm.loading = false;
+                }, 1500);
+            }, function error(response) {
+                alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
+            });
     }
 
     $scope.formClear = function() {
@@ -471,56 +458,59 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
         var params = {
             representante: $scope.representante
         };
-        formService.getData(params, function(response) {
-            //console.info('response', response);
-            if (response.qQuery.length === 0) {
-                alert('Nenhum registro encontrado');
-                return;
-            }
-            $scope.representante.autorizado = true;
-
-            // loop em cliente
-            angular.forEach($scope.cliente, function(index, key) {
-                if (key === 'rev_cli_nascimento') {
-                    $scope.cliente['rev_cli_nascimento'] = new Date(response.qQuery[0][key.toUpperCase()])
-                } else {
-                    $scope.cliente[key] = response.qQuery[0][key.toUpperCase()];
+        formService.getData(params)
+            .then(function success(response) {
+                //console.info('response', response);
+                if (response.data.qQuery.length === 0) {
+                    alert('Nenhum registro encontrado');
+                    return;
                 }
-            });
+                $scope.representante.autorizado = true;
 
-            // loop em veículo
-            angular.forEach($scope.veiculo, function(index, key) {
-                $scope.veiculo[key] = response.qQuery[0][key.toUpperCase()];
-            });
+                // loop em cliente
+                angular.forEach($scope.cliente, function(index, key) {
+                    if (key === 'rev_cli_nascimento') {
+                        $scope.cliente['rev_cli_nascimento'] = new Date(response.data.qQuery[0][key.toUpperCase()])
+                    } else {
+                        $scope.cliente[key] = response.data.qQuery[0][key.toUpperCase()];
+                    }
+                });
 
-            // loop em equipamentos
-            angular.forEach($scope.equipamentos, function(index) {
-                index.valorVista.value = response.qQuery[0][index.valorVista.field.toUpperCase()];
-                index.pagamentoPrazo.value = response.qQuery[0][index.pagamentoPrazo.field.toUpperCase()];
-                index.locacao.value = response.qQuery[0][index.locacao.field.toUpperCase()];
-            });
+                // loop em veículo
+                angular.forEach($scope.veiculo, function(index, key) {
+                    $scope.veiculo[key] = response.data.qQuery[0][key.toUpperCase()];
+                });
 
-            // loop em servicos
-            angular.forEach($scope.servicos, function(index) {
-                index.valorVista.value = response.qQuery[0][index.valorVista.field.toUpperCase()];
-                index.pagamentoPrazo.value = response.qQuery[0][index.pagamentoPrazo.field.toUpperCase()];
-                index.locacao.value = response.qQuery[0][index.locacao.field.toUpperCase()];
-            });
+                // loop em equipamentos
+                angular.forEach($scope.equipamentos, function(index) {
+                    index.valorVista.value = response.data.qQuery[0][index.valorVista.field.toUpperCase()];
+                    index.pagamentoPrazo.value = response.data.qQuery[0][index.pagamentoPrazo.field.toUpperCase()];
+                    index.locacao.value = response.data.qQuery[0][index.locacao.field.toUpperCase()];
+                });
 
-            // loop em pagamento
-            angular.forEach($scope.pagamento, function(index, key) {
-                if (key === 'rev_pagamento_cheque_data_inicio') {
-                    $scope.cliente['rev_pagamento_cheque_data_inicio'] = new Date(response.qQuery[0][key.toUpperCase()])
-                } else {
-                    $scope.pagamento[key] = response.qQuery[0][key.toUpperCase()];
-                }
-            });
+                // loop em servicos
+                angular.forEach($scope.servicos, function(index) {
+                    index.valorVista.value = response.data.qQuery[0][index.valorVista.field.toUpperCase()];
+                    index.pagamentoPrazo.value = response.data.qQuery[0][index.pagamentoPrazo.field.toUpperCase()];
+                    index.locacao.value = response.data.qQuery[0][index.locacao.field.toUpperCase()];
+                });
 
-            // loop em contrato
-            angular.forEach($scope.contrato, function(index, key) {
-                $scope.contrato[key] = new Date(response.qQuery[0][key.toUpperCase()]);
+                // loop em pagamento
+                angular.forEach($scope.pagamento, function(index, key) {
+                    if (key === 'rev_pagamento_cheque_data_inicio') {
+                        $scope.cliente['rev_pagamento_cheque_data_inicio'] = new Date(response.data.qQuery[0][key.toUpperCase()])
+                    } else {
+                        $scope.pagamento[key] = response.data.qQuery[0][key.toUpperCase()];
+                    }
+                });
+
+                // loop em contrato
+                angular.forEach($scope.contrato, function(index, key) {
+                    $scope.contrato[key] = new Date(response.data.qQuery[0][key.toUpperCase()]);
+                });
+            }, function error(response) {
+                alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
             });
-        })
     }
 
     $scope.saveData = function() {
@@ -537,36 +527,39 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
 
         //console.info('saveData', params);
         //return;
-        formService.saveData(params, function(response) {
-            //console.info('response', response);
+        formService.saveData(params)
+            .then(function success(response) {
+                //console.info('response', response);
 
-            var mdToastMessage = 'Proposta criada com sucesso';
-            if ($scope.representante.operacao > 0) {
-                mdToastMessage = 'Proposta atualizada com sucesso';
-            }
+                var mdToastMessage = 'Proposta criada com sucesso';
+                if ($scope.representante.operacao > 0) {
+                    mdToastMessage = 'Proposta atualizada com sucesso';
+                }
 
-            if (response.data.success) {
-                //https://github.com/angular/material/issues/3539
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent(mdToastMessage)
-                    .position('bottom right')
-                    .hideDelay(0)
-                    .action('Fechar')
+                if (response.data.data.success) {
+                    //https://github.com/angular/material/issues/3539
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(mdToastMessage)
+                        .position('bottom right')
+                        .hideDelay(0)
+                        .action('Fechar')
+                    );
+                }
+
+                $scope.representante.operacao = response.data.data.rev_codigo;
+                window.open(
+                    '_server/files/venda_' + $scope.representante.operacao + '.pdf',
+                    '_blank'
                 );
-            }
 
-            $scope.representante.operacao = response.data.rev_codigo;
-            window.open(
-                '_server/files/venda_' + $scope.representante.operacao + '.pdf',
-                '_blank'
-            );
-
-            $timeout(function() {
-                $scope.representanteForm.message = response.data.message;
-                $scope.representanteForm.loading = false;
-            }, 1500);
-        });
+                $timeout(function() {
+                    $scope.representanteForm.message = response.data.data.message;
+                    $scope.representanteForm.loading = false;
+                }, 1500);
+            }, function error(response) {
+                alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
+            });
     }
 }])
 console.info('app.js done', new Date().getTime());

@@ -31,5 +31,8 @@
     "angular-route": "~1.5.3",
     "moment": "~2.13.0",
     "angular-ui-mask": "~1.8.5"
+  },
+  "resolutions": {
+    "angular": "1.6.2"
   }
 }
