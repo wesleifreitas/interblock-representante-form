@@ -286,13 +286,13 @@
                             </div>
                             <div layout="column" class="datepicker-column">
                                 <label>Dt. Início do contrato</label>
-                                <md-datepicker ng-model="contrato.rev_con_data_inicio" md-placeholder="" required>
+                                <md-datepicker ng-model="contrato.rev_con_data_inicio" md-placeholder="" required ng-change="contratoInicio()">
                                 </md-datepicker>
                                 <span class="hint">DD/MM/AAAA</span>
                              </div>
                             <div layout="column" class="datepicker-column">
                                 <label>Dt. Término do contrato</label>
-                                <md-datepicker ng-model="contrato.rev_con_data_fim" md-placeholder="" required>
+                                <md-datepicker name="rev_con_data_fim" ng-model="contrato.rev_con_data_fim" md-placeholder="" required>
                                 </md-datepicker>
                                 <span class="hint">DD/MM/AAAA</span>
                             </div>

@@ -22,14 +22,13 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', '$mdDat
     $mdDateLocaleProvider.months = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
     $mdDateLocaleProvider.shortMonths = ['jan.', 'fev', 'mar', 'abr', 'maio', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
     $mdDateLocaleProvider.parseDate = function(dateString) {
-        //moment.locale('pt-br');
         var m = moment(dateString, 'L', true);
         return m.isValid() ? m.toDate() : new Date(NaN);
     };
+
     $mdDateLocaleProvider.formatDate = function(date) {
-        //moment.locale('pt-br');    
-        if (moment(date).format('L') === 'Invalid date') return ''
-        else return moment(date).format('L');
+        var m = moment(date);
+        return m.isValid() ? m.format('L') : '';
     };
 }]);
 
@@ -396,6 +395,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
         formService.login(params)
             .then(function success(response) {
                 console.info('response', response);
+
                 $timeout(function() {
                     $scope.loginForm.error = !response.data.success;
                     $scope.loginForm.message = response.data.message;
@@ -405,6 +405,12 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
             }, function error(response) {
                 alert('Ops! Ocorreu um erro inesperado.\nPor favor contate o administrador do sistema!');
             });
+    }
+
+    $scope.contratoInicio = function() {
+        //console.info($scope.contrato.rev_con_data_inicio);
+        $scope.contrato.rev_con_data_fim = new Date(moment($scope.contrato.rev_con_data_inicio).add(50, 'months'));
+        $scope.contrato.rev_con_data_renovacao = new Date(moment($scope.contrato.rev_con_data_inicio).add(49, 'months'));
     }
 
     $scope.formClear = function() {
@@ -525,7 +531,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
             contrato: $scope.contrato
         };
 
-        //console.info('saveData', params);
+        console.info('saveData', params);
         //return;
         formService.saveData(params)
             .then(function success(response) {
@@ -536,7 +542,7 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
                     mdToastMessage = 'Proposta atualizada com sucesso';
                 }
 
-                if (response.data.data.success) {
+                if (response.data.success) {
                     //https://github.com/angular/material/issues/3539
                     $mdToast.show(
                         $mdToast.simple()
@@ -547,14 +553,14 @@ app.controller('FormCtrl', ['formService', '$scope', '$timeout', '$mdToast', fun
                     );
                 }
 
-                $scope.representante.operacao = response.data.data.rev_codigo;
+                $scope.representante.operacao = response.data.rev_codigo;
                 window.open(
                     '_server/files/venda_' + $scope.representante.operacao + '.pdf',
                     '_blank'
                 );
 
                 $timeout(function() {
-                    $scope.representanteForm.message = response.data.data.message;
+                    $scope.representanteForm.message = response.data.message;
                     $scope.representanteForm.loading = false;
                 }, 1500);
             }, function error(response) {
